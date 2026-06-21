@@ -3,957 +3,1835 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Java Spring Boot Interview Prep Roadmap – 6 YOE</title>
+<title>Complete Java Interview Prep – 6 YOE</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d1117; color: #e2e8f0; min-height: 100vh; }
 
-  header {
-    background: linear-gradient(135deg, #1B4F72 0%, #0d2137 100%);
-    padding: 32px 40px 24px;
-    border-bottom: 2px solid #2563eb44;
-  }
-  header h1 { font-size: 1.8rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
-  header p { color: #93c5fd; margin-top: 6px; font-size: 0.95rem; }
+/* ── HEADER ── */
+header {
+  background: linear-gradient(135deg, #0f2744 0%, #0d1117 100%);
+  padding: 28px 36px 20px;
+  border-bottom: 2px solid #1d4ed855;
+  position: sticky; top: 0; z-index: 100;
+}
+header h1 { font-size: 1.5rem; font-weight: 800; color: #fff; }
+header p  { color: #60a5fa; font-size: 0.82rem; margin-top: 4px; }
 
-  .tabs {
-    display: flex; gap: 4px; padding: 16px 40px 0;
-    background: #0f1117; border-bottom: 1px solid #1e293b;
-    overflow-x: auto; flex-wrap: nowrap;
-  }
-  .tab {
-    padding: 10px 18px; border-radius: 8px 8px 0 0; font-size: 0.85rem; font-weight: 600;
-    cursor: pointer; border: 1px solid transparent; border-bottom: none; white-space: nowrap;
-    color: #94a3b8; transition: all 0.2s;
-  }
-  .tab:hover { background: #1e293b; color: #e2e8f0; }
-  .tab.active { background: #1e293b; border-color: #334155; color: #60a5fa; }
+/* ── LAYOUT ── */
+.layout { display: flex; min-height: calc(100vh - 80px); }
 
-  .content { padding: 32px 40px; max-width: 1100px; }
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 260px; flex-shrink: 0;
+  background: #0a0f1a; border-right: 1px solid #1e293b;
+  padding: 16px 0; overflow-y: auto;
+  position: sticky; top: 80px; height: calc(100vh - 80px);
+}
+.sidebar-section { padding: 10px 16px 4px; font-size: 0.68rem; font-weight: 800;
+  color: #475569; text-transform: uppercase; letter-spacing: 0.08em; }
+.nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; font-size: 0.8rem; color: #94a3b8;
+  cursor: pointer; border-left: 3px solid transparent;
+  transition: all 0.15s; text-decoration: none;
+}
+.nav-item:hover { background: #111827; color: #e2e8f0; border-left-color: #334155; }
+.nav-item.active { background: #111827; color: #60a5fa; border-left-color: #3b82f6; font-weight: 600; }
+.nav-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
 
-  .section { display: none; }
-  .section.active { display: block; }
+/* ── MAIN ── */
+.main { flex: 1; padding: 28px 36px; overflow-y: auto; max-width: 900px; }
 
-  /* Topic Cards */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; margin-top: 8px; }
+/* ── TOPIC SECTION ── */
+.topic-section { display: none; }
+.topic-section.active { display: block; }
 
-  .card {
-    background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px #0006; }
+.topic-hero {
+  background: linear-gradient(135deg, #0f2744, #162032);
+  border: 1px solid #1d4ed844; border-radius: 14px;
+  padding: 24px 28px; margin-bottom: 28px;
+}
+.topic-hero h2 { font-size: 1.5rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; }
+.topic-hero p  { color: #93c5fd; font-size: 0.88rem; margin-top: 8px; line-height: 1.6; }
+.hero-meta { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.meta-tag {
+  padding: 4px 12px; border-radius: 20px; font-size: 0.73rem; font-weight: 700;
+}
+.tag-priority-high { background: #7f1d1d; color: #fca5a5; }
+.tag-priority-med  { background: #78350f; color: #fcd34d; }
+.tag-priority-low  { background: #1e3a5f; color: #93c5fd; }
+.tag-type { background: #1a2e1a; color: #86efac; }
 
-  .card-header {
-    padding: 16px 20px 12px;
-    display: flex; align-items: flex-start; gap: 12px;
-    border-bottom: 1px solid #334155;
-  }
-  .card-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
-  .card-title { font-size: 1rem; font-weight: 700; color: #f1f5f9; }
-  .card-sub { font-size: 0.78rem; color: #94a3b8; margin-top: 2px; }
+/* ── CARDS ── */
+.card {
+  background: #111827; border: 1px solid #1e293b; border-radius: 12px;
+  margin-bottom: 20px; overflow: hidden;
+}
+.card-title {
+  padding: 14px 20px; background: #0f1f35;
+  font-weight: 700; font-size: 0.92rem; color: #93c5fd;
+  border-bottom: 1px solid #1e293b;
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+}
+.card-title .chevron { margin-left: auto; color: #475569; transition: transform 0.2s; font-size: 0.8rem; }
+.card-title.open .chevron { transform: rotate(180deg); }
+.card-body { padding: 18px 20px; display: none; }
+.card-body.open { display: block; }
 
-  .badge {
-    margin-left: auto; padding: 2px 10px; border-radius: 20px; font-size: 0.72rem;
-    font-weight: 700; flex-shrink: 0; align-self: flex-start; margin-top: 2px;
-  }
-  .badge.high { background: #7f1d1d; color: #fca5a5; }
-  .badge.med  { background: #78350f; color: #fcd34d; }
-  .badge.low  { background: #1e3a5f; color: #93c5fd; }
+/* ── SUBTOPICS ── */
+.subtopic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+.subtopic-item {
+  background: #0d1b2a; border: 1px solid #1e3a5f44;
+  border-radius: 8px; padding: 10px 14px;
+}
+.subtopic-name { font-size: 0.82rem; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+.subtopic-desc { font-size: 0.75rem; color: #64748b; line-height: 1.4; }
 
-  .card-body { padding: 14px 20px; }
-  .topic-list { list-style: none; }
-  .topic-list li {
-    padding: 5px 0; font-size: 0.83rem; color: #cbd5e1;
-    border-bottom: 1px solid #2a3a4a; display: flex; align-items: flex-start; gap: 7px;
-  }
-  .topic-list li:last-child { border-bottom: none; }
-  .topic-list li::before { content: "›"; color: #60a5fa; font-weight: bold; flex-shrink: 0; margin-top: 1px; }
+/* ── GOOGLE KEYWORDS ── */
+.keywords-section { margin-bottom: 16px; }
+.keywords-label { font-size: 0.72rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.keywords-label::after { content: ''; flex: 1; height: 1px; background: #1e293b; }
+.keywords-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+.keyword {
+  padding: 4px 12px; background: #0f1a2e; border: 1px solid #1d4ed844;
+  border-radius: 20px; font-size: 0.75rem; color: #60a5fa; cursor: pointer;
+  transition: all 0.15s; font-family: 'Courier New', monospace;
+}
+.keyword:hover { background: #1d4ed822; border-color: #3b82f6; }
 
-  .resources { margin-top: 10px; padding-top: 10px; border-top: 1px solid #334155; }
-  .res-label { font-size: 0.72rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
-  .res-list { display: flex; flex-wrap: wrap; gap: 6px; }
-  .res-tag {
-    padding: 3px 10px; background: #0f1f35; border: 1px solid #2563eb44;
-    border-radius: 20px; font-size: 0.75rem; color: #93c5fd;
-  }
+/* ── QUESTIONS ── */
+.questions-section { }
+.q-group-label { font-size: 0.72rem; font-weight: 700; color: #475569; text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 8px; margin-top: 16px; display: flex; align-items: center; gap: 6px; }
+.q-group-label::after { content: ''; flex: 1; height: 1px; background: #1e293b; }
 
-  /* Timeline */
-  .timeline { margin-top: 8px; }
-  .week-block {
-    background: #1e293b; border: 1px solid #334155; border-radius: 12px;
-    margin-bottom: 16px; overflow: hidden;
-  }
-  .week-header {
-    padding: 14px 20px; background: #162032;
-    display: flex; align-items: center; gap: 14px; cursor: pointer;
-  }
-  .week-num {
-    background: #1d4ed8; color: #fff; font-weight: 800; font-size: 0.8rem;
-    padding: 4px 12px; border-radius: 20px; flex-shrink: 0;
-  }
-  .week-title { font-weight: 700; color: #e2e8f0; font-size: 0.95rem; }
-  .week-focus { margin-left: auto; font-size: 0.78rem; color: #64748b; }
-  .chevron { margin-left: 10px; color: #64748b; transition: transform 0.2s; }
-  .week-body { padding: 0 20px 16px; display: none; }
-  .week-body.open { display: block; }
-  .week-body ul { margin-top: 12px; }
-  .week-body ul li {
-    font-size: 0.84rem; color: #cbd5e1; padding: 5px 0;
-    border-bottom: 1px dashed #1e3a4a; display: flex; gap: 8px; align-items: flex-start;
-  }
-  .week-body ul li:last-child { border-bottom: none; }
-  .week-body ul li::before { content: "✓"; color: #22c55e; flex-shrink: 0; }
+.q-item {
+  background: #0d1117; border: 1px solid #1e293b; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 8px; font-size: 0.83rem; color: #cbd5e1;
+  border-left: 3px solid #334155; line-height: 1.5;
+  transition: border-left-color 0.15s;
+}
+.q-item:hover { border-left-color: #3b82f6; }
+.q-item.scenario  { border-left-color: #d97706; }
+.q-item.behavioural { border-left-color: #8b5cf6; }
+.q-item.coding    { border-left-color: #22c55e; }
+.q-item.deep      { border-left-color: #ef4444; }
 
-  /* Questions */
-  .q-section { margin-bottom: 28px; }
-  .q-cat-title {
-    font-size: 1rem; font-weight: 700; color: #60a5fa; margin-bottom: 12px;
-    padding-bottom: 8px; border-bottom: 1px solid #334155;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .q-list { display: flex; flex-direction: column; gap: 8px; }
-  .q-item {
-    background: #1e293b; border: 1px solid #334155; border-radius: 8px;
-    padding: 12px 16px; font-size: 0.85rem; color: #cbd5e1;
-    border-left: 3px solid #334155; cursor: pointer; transition: all 0.2s;
-  }
-  .q-item:hover { border-left-color: #3b82f6; background: #243447; }
-  .q-item.behavioral { border-left-color: #8b5cf6; }
-  .q-item.technical  { border-left-color: #0ea5e9; }
-  .q-item.coding     { border-left-color: #22c55e; }
-  .q-item.scenario   { border-left-color: #f59e0b; }
-  .q-difficulty {
-    display: inline-block; font-size: 0.68rem; font-weight: 700;
-    padding: 1px 7px; border-radius: 10px; margin-left: 8px; vertical-align: middle;
-  }
-  .q-difficulty.hard { background: #7f1d1d; color: #fca5a5; }
-  .q-difficulty.med  { background: #78350f; color: #fcd34d; }
-  .q-difficulty.easy { background: #14532d; color: #86efac; }
+.q-tag {
+  display: inline-block; font-size: 0.65rem; font-weight: 700;
+  padding: 1px 7px; border-radius: 10px; margin-left: 8px; vertical-align: middle;
+}
+.q-tag.hard   { background: #7f1d1d; color: #fca5a5; }
+.q-tag.med    { background: #78350f; color: #fcd34d; }
+.q-tag.easy   { background: #14532d; color: #86efac; }
+.q-tag.senior { background: #312e81; color: #c4b5fd; }
 
-  /* Intro note */
-  .note {
-    background: #162032; border: 1px solid #1d4ed866; border-radius: 10px;
-    padding: 14px 18px; margin-bottom: 24px; font-size: 0.85rem; color: #93c5fd;
-    line-height: 1.6;
-  }
-  .note strong { color: #60a5fa; }
+/* depth bar */
+.depth-bar { display: flex; gap: 6px; align-items: center; margin-bottom: 16px; }
+.depth-label { font-size: 0.72rem; color: #64748b; font-weight: 600; }
+.depth-dot { width: 10px; height: 10px; border-radius: 50%; }
+.depth-dot.filled { background: #3b82f6; }
+.depth-dot.empty  { background: #1e293b; }
+
+/* ── PROGRESS TRACKER ── */
+.progress-bar-wrap { background: #1e293b; border-radius: 4px; height: 4px; margin-top: 8px; }
+.progress-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 0.3s; }
+
+/* ── RESPONSIVE ── */
+@media(max-width: 700px) {
+  .sidebar { display: none; }
+  .subtopic-grid { grid-template-columns: 1fr; }
+  .main { padding: 16px; }
+}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🚀 Java Spring Boot Interview Prep Roadmap</h1>
-  <p>Tailored for 6+ Years of Experience · Backend Engineer · Senior / Lead Level</p>
+  <h1>☕ Complete Java Backend Interview Guide – 6 YOE</h1>
+  <p>Every topic · Every subtopic · Google search terms · Sample questions · Scenario questions · Targeted for Product + Service + Fintech companies</p>
 </header>
 
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('topics')">📚 Topics</div>
-  <div class="tab" onclick="switchTab('timeline')">🗓️ 8-Week Plan</div>
-  <div class="tab" onclick="switchTab('questions')">❓ Interview Questions</div>
-</div>
+<div class="layout">
 
-<div class="content">
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+  <div class="sidebar-section">🔴 Must-Know</div>
+  <a class="nav-item active" onclick="show('java-core')"><span class="nav-icon">☕</span>Core Java</a>
+  <a class="nav-item" onclick="show('multithreading')"><span class="nav-icon">🔄</span>Multithreading</a>
+  <a class="nav-item" onclick="show('spring-boot')"><span class="nav-icon">🍃</span>Spring Boot</a>
+  <a class="nav-item" onclick="show('spring-security')"><span class="nav-icon">🔐</span>Spring Security</a>
+  <a class="nav-item" onclick="show('jpa-sql')"><span class="nav-icon">🗄️</span>JPA / Hibernate & SQL</a>
+  <a class="nav-item" onclick="show('microservices')"><span class="nav-icon">🧩</span>Microservices</a>
+  <a class="nav-item" onclick="show('system-design')"><span class="nav-icon">📐</span>System Design</a>
+  <a class="nav-item" onclick="show('kafka')"><span class="nav-icon">⚡</span>Kafka</a>
+  <a class="nav-item" onclick="show('design-patterns')"><span class="nav-icon">🏗️</span>Design Patterns</a>
 
-<!-- ═══════════════════════════ TOPICS ═══════════════════════════ -->
-<div id="topics" class="section active">
+  <div class="sidebar-section">🟡 Strong Differentiator</div>
+  <a class="nav-item" onclick="show('rest-api')"><span class="nav-icon">🌐</span>REST API Design</a>
+  <a class="nav-item" onclick="show('testing')"><span class="nav-icon">🧪</span>Testing</a>
+  <a class="nav-item" onclick="show('performance')"><span class="nav-icon">⚙️</span>Performance & JVM</a>
+  <a class="nav-item" onclick="show('redis')"><span class="nav-icon">🧱</span>Redis & Caching</a>
+  <a class="nav-item" onclick="show('elasticsearch')"><span class="nav-icon">🔍</span>Elasticsearch</a>
+  <a class="nav-item" onclick="show('cloud')"><span class="nav-icon">☁️</span>Cloud & Containers</a>
+  <a class="nav-item" onclick="show('dsa')"><span class="nav-icon">🧮</span>DSA & Coding Rounds</a>
 
-<div class="note">
-  <strong>How to read the cards:</strong> 🔴 High Priority = almost certainly asked at senior level · 🟡 Medium = strong differentiator · 🔵 Good to Know = bonus points. Resources are free-first.
-</div>
+  <div class="sidebar-section">🎯 Behavioural</div>
+  <a class="nav-item" onclick="show('behavioural')"><span class="nav-icon">🎤</span>Behavioural & Leadership</a>
+</nav>
 
-<div class="grid">
+<!-- ═══ MAIN ═══ -->
+<main class="main">
 
-  <!-- JAVA CORE -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon">☕</div>
-      <div><div class="card-title">Core Java (Senior Depth)</div><div class="card-sub">Non-negotiable foundation</div></div>
-      <span class="badge high">🔴 Must</span>
+
+<!-- ════════════════════════════════════════
+     SECTION: CORE JAVA
+════════════════════════════════════════ -->
+<section id="java-core" class="topic-section active">
+  <div class="topic-hero">
+    <h2>☕ Core Java</h2>
+    <p>The foundation of every Java interview regardless of company type. At 6 YOE you're expected to know not just what things do but why — internals, trade-offs, and JVM behaviour.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know</span>
+      <span class="meta-tag tag-type">Asked at ALL company types</span>
+      <span class="meta-tag tag-type">Depth: Expert</span>
     </div>
+  </div>
+
+  <!-- OOP -->
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Object-Oriented Programming Principles <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>JVM internals — heap, stack, metaspace, GC (G1, ZGC)</li>
-        <li>Memory model & happens-before guarantees</li>
-        <li>Collections internals — HashMap resize, ConcurrentHashMap</li>
-        <li>Generics, type erasure, wildcards</li>
-        <li>Java 8–17: Streams, Optional, Lambdas, Records, Sealed classes</li>
-        <li>Exception hierarchy — checked vs unchecked</li>
-        <li>Equals/hashCode contract</li>
-        <li>Immutability, final keyword</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">Baeldung.com</span>
-          <span class="res-tag">Effective Java (book)</span>
-          <span class="res-tag">Java Brains YouTube</span>
-          <span class="res-tag">javadoc official</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Abstraction</div><div class="subtopic-desc">Hiding implementation; abstract class vs interface differences and when to use each</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Encapsulation</div><div class="subtopic-desc">Access modifiers, getters/setters, immutability, why it matters for thread safety</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Inheritance vs Composition</div><div class="subtopic-desc">"Favour composition over inheritance" — the why, diamond problem in Java, default methods</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Polymorphism</div><div class="subtopic-desc">Compile-time (overloading) vs runtime (overriding), covariant return types, dynamic dispatch</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Abstract class vs Interface</div><div class="subtopic-desc">Java 8 default/static methods in interfaces, when abstract class still wins</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">SOLID Principles</div><div class="subtopic-desc">SRP, OCP, LSP, ISP, DIP — be ready to show violation and fix in code</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java abstract class vs interface java 17</span>
+          <span class="keyword">composition over inheritance java example</span>
+          <span class="keyword">SOLID principles java real world example</span>
+          <span class="keyword">covariant return type java</span>
+          <span class="keyword">java default method diamond problem</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between an abstract class and an interface in Java? When would you pick one over the other? <span class="q-tag med">Medium</span></div>
+        <div class="q-item deep">Can you explain the Liskov Substitution Principle with a real code example — and show me a violation of it? <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">Why is "favour composition over inheritance" a best practice? Give a situation from your experience where you applied it.</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You have a <code>PaymentGateway</code> interface used by 5 services. A new requirement needs a method that only 2 services should implement. How do you evolve the interface without breaking existing code? <span class="q-tag senior">Senior</span></div>
+        <div class="q-item scenario">In your HCSC project, you had multiple payment providers (Fiserv etc.). How would you model this using OOP principles so adding a new provider requires zero changes to existing code?</div>
       </div>
     </div>
   </div>
 
-  <!-- MULTITHREADING -->
+  <!-- COLLECTIONS -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🔄</div>
-      <div><div class="card-title">Multithreading & Concurrency</div><div class="card-sub">High-value senior topic</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">2. Collections Framework Internals <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Thread lifecycle, daemon threads</li>
-        <li>synchronized, volatile, ReentrantLock</li>
-        <li>ExecutorService, ThreadPool types</li>
-        <li>CompletableFuture & async patterns</li>
-        <li>Deadlock, livelock, race condition — detect & prevent</li>
-        <li>Atomic classes — AtomicInteger, AtomicReference</li>
-        <li>BlockingQueue, CountDownLatch, CyclicBarrier, Semaphore</li>
-        <li>ThreadLocal — use cases & pitfalls</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">Baeldung Concurrency</span>
-          <span class="res-tag">Java Concurrency in Practice (book)</span>
-          <span class="res-tag">Defog Tech YouTube</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">HashMap Internals</div><div class="subtopic-desc">Hashing, bucket array, linked list → red-black tree (Java 8, threshold=8), load factor, resize</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">ConcurrentHashMap</div><div class="subtopic-desc">Segment locking (Java 7) vs CAS + synchronized bucket (Java 8), read without lock</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">LinkedHashMap & TreeMap</div><div class="subtopic-desc">Access-order vs insertion-order, NavigableMap, floor/ceiling operations</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">ArrayList vs LinkedList</div><div class="subtopic-desc">Cache locality, O(1) random access vs O(n), when LinkedList is actually better</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">PriorityQueue & TreeSet</div><div class="subtopic-desc">Heap-based, natural ordering, custom comparator — used heavily in DSA rounds too</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Fail-fast vs Fail-safe Iterators</div><div class="subtopic-desc">ConcurrentModificationException, why CopyOnWriteArrayList exists</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java hashmap internal working java 8</span>
+          <span class="keyword">ConcurrentHashMap java 8 internal implementation</span>
+          <span class="keyword">java collections fail-fast vs fail-safe iterator</span>
+          <span class="keyword">LinkedHashMap LRU cache implementation java</span>
+          <span class="keyword">java hashcode equals contract</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">Walk me through exactly what happens inside HashMap when you call <code>put("key", value)</code> — from hashCode computation to storage. What changed in Java 8? <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">What is the difference between HashMap and ConcurrentHashMap? Why can't you use Collections.synchronizedMap() for high-concurrency scenarios?</div>
+        <div class="q-item">If you override <code>equals()</code> but not <code>hashCode()</code>, what breaks? Give a concrete example.</div>
+        <div class="q-item">When would you use a LinkedHashMap? Implement an LRU cache using one. <span class="q-tag med">Medium</span></div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your service maintains an in-memory cache of 10,000 taxpayer sessions. Multiple threads read and write this cache. Which collection do you use and why? What are the risks?</div>
+        <div class="q-item scenario">You're iterating over a list of transactions and removing invalid ones during iteration. Your code throws ConcurrentModificationException. What's happening and how do you fix it?</div>
       </div>
     </div>
   </div>
 
-  <!-- SPRING BOOT -->
+  <!-- JAVA 8+ FEATURES -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🍃</div>
-      <div><div class="card-title">Spring Boot & Spring Core</div><div class="card-sub">Your primary stack — go deep</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">3. Java 8–17 Modern Features <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>IoC, DI — constructor vs field vs setter injection</li>
-        <li>Bean lifecycle, scopes (singleton, prototype, request)</li>
-        <li>@Conditional, @Profile, auto-configuration internals</li>
-        <li>Spring MVC request lifecycle — DispatcherServlet flow</li>
-        <li>Spring Boot starters, application.properties vs YAML</li>
-        <li>Actuator — health, metrics, custom endpoints</li>
-        <li>Spring AOP — @Aspect, pointcuts, proxy types (JDK vs CGLIB)</li>
-        <li>Spring Events, ApplicationContext</li>
-        <li>Externalized config — @Value, @ConfigurationProperties</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">spring.io official docs</span>
-          <span class="res-tag">Baeldung Spring</span>
-          <span class="res-tag">Daily Code Buffer YouTube</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Streams API</div><div class="subtopic-desc">Lazy evaluation, intermediate vs terminal ops, flatMap, collectors (groupingBy, toMap, partitioningBy), parallel streams pitfalls</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Optional</div><div class="subtopic-desc">Avoiding NPE, orElse vs orElseGet (lazy), orElseThrow, flatMap, anti-patterns (Optional in fields/params)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Lambda & Functional Interfaces</div><div class="subtopic-desc">Function, BiFunction, Predicate, Supplier, Consumer, method references, effectively final</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Records (Java 16)</div><div class="subtopic-desc">Immutable data carriers, auto-generated equals/hashCode/toString, compact constructors</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Sealed Classes (Java 17)</div><div class="subtopic-desc">Restricting class hierarchies, use with pattern matching, ADT-style modelling</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">var (Java 10)</div><div class="subtopic-desc">Local variable type inference, where it helps and where it hurts readability</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java streams flatMap vs map example</span>
+          <span class="keyword">java streams collectors groupingBy toMap</span>
+          <span class="keyword">java optional orElse vs orElseGet difference</span>
+          <span class="keyword">java parallel stream thread safety pitfalls</span>
+          <span class="keyword">java records sealed classes practical example</span>
+          <span class="keyword">java functional interface predicate composition</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between <code>map()</code> and <code>flatMap()</code> in Streams? Give a real example where you need flatMap.</div>
+        <div class="q-item deep">What is the difference between <code>orElse()</code> and <code>orElseGet()</code> in Optional? Why does it matter for performance? <span class="q-tag hard">Trick question</span></div>
+        <div class="q-item">What are the pitfalls of using parallel streams? When should you NOT use them?</div>
+        <div class="q-item">Given a list of orders, use Streams to group them by customer, sum the total amount per customer, and return only customers who spent over ₹10,000. <span class="q-tag med">Coding</span></div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You have a list of 1 million tax records to process — validate, transform, and write to DB. A teammate suggests using parallel streams. What are your concerns? What alternative would you suggest?</div>
+        <div class="q-item scenario">You're using Optional extensively in a codebase and notice that <code>orElse(expensiveDbCall())</code> is being called everywhere even when the value is present. What's the bug and how do you fix it across the codebase?</div>
       </div>
     </div>
   </div>
 
-  <!-- SPRING SECURITY -->
+  <!-- JVM INTERNALS -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🔐</div>
-      <div><div class="card-title">Spring Security</div><div class="card-sub">Critical for any backend role</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">4. JVM Internals & Memory Model <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Authentication vs Authorization — filter chain</li>
-        <li>JWT — structure, signing, validation, refresh tokens</li>
-        <li>OAuth 2.0 + OpenID Connect — flows (Auth code, client credentials)</li>
-        <li>Method-level security — @PreAuthorize, @Secured</li>
-        <li>CSRF, CORS — when to enable/disable</li>
-        <li>Password encoding — BCrypt</li>
-        <li>UserDetailsService, custom filters</li>
-        <li>Spring Security 6 lambda DSL</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">Baeldung Security</span>
-          <span class="res-tag">Amigoscode YouTube</span>
-          <span class="res-tag">spring.io security docs</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">JVM Memory Areas</div><div class="subtopic-desc">Heap (Young/Old gen), Stack (per thread), Metaspace, Code Cache, Native Memory — what goes where</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Garbage Collection</div><div class="subtopic-desc">Serial, Parallel, G1 (default Java 9+), ZGC, Shenandoah — stop-the-world pauses, GC roots</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Java Memory Model (JMM)</div><div class="subtopic-desc">Happens-before guarantee, visibility, reordering, why volatile and synchronized enforce JMM</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Class Loading</div><div class="subtopic-desc">Bootstrap, Extension, Application classloaders, delegation model, dynamic class loading</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Memory Leaks in Java</div><div class="subtopic-desc">Static references, unclosed resources, listener not removed, ThreadLocal misuse, intern abuse</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">String Pool & Interning</div><div class="subtopic-desc">String.intern(), literal vs new String(), where pool lives (Metaspace post Java 8)</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">JVM memory areas heap stack metaspace explained</span>
+          <span class="keyword">G1 garbage collector how it works java</span>
+          <span class="keyword">java memory model happens-before guarantee</span>
+          <span class="keyword">java memory leak causes examples detection</span>
+          <span class="keyword">java class loading mechanism delegation model</span>
+          <span class="keyword">java string pool intern metaspace java 8</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">Explain the difference between heap and stack in the JVM. What happens to an object after it goes out of scope? When is it GC'd? <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">What is Metaspace? Why did Java 8 replace PermGen with it? What can cause a Metaspace OOM?</div>
+        <div class="q-item deep">Two threads read and write a shared variable without synchronization. Walk me through every way this can go wrong (visibility, atomicity, reordering). <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">How does G1 GC differ from Parallel GC? When would you tune heap regions?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your Spring Boot service has been running for 3 days and memory usage keeps climbing. CPU is normal. It hasn't crashed yet. How do you diagnose and find the leak? Walk me through the exact steps. <span class="q-tag senior">Senior</span></div>
+        <div class="q-item scenario">Your service experiences 2-second pause spikes every few minutes under heavy load. Logs show no exceptions. What's your first suspicion and how do you confirm it?</div>
       </div>
     </div>
   </div>
 
-  <!-- MICROSERVICES -->
+  <!-- EXCEPTIONS -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🧩</div>
-      <div><div class="card-title">Microservices Design</div><div class="card-sub">Essential at senior level</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">5. Exception Handling <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Service decomposition — domain-driven design basics</li>
-        <li>Inter-service comms — REST vs messaging vs gRPC</li>
-        <li>API Gateway pattern — routing, rate limiting, auth</li>
-        <li>Circuit Breaker — Resilience4j (not Hystrix)</li>
-        <li>Service Discovery — Eureka / Consul concepts</li>
-        <li>Saga pattern — choreography vs orchestration</li>
-        <li>Eventual consistency, idempotency</li>
-        <li>Distributed tracing — Sleuth + Zipkin (you've used Sleuth!)</li>
-        <li>Config server, centralised logging (ELK)</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">microservices.io patterns</span>
-          <span class="res-tag">Tech Primers YouTube</span>
-          <span class="res-tag">Sam Newman book</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Checked vs Unchecked</div><div class="subtopic-desc">When to use each, why Spring uses unchecked exceptions everywhere, anti-patterns</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Exception Hierarchy</div><div class="subtopic-desc">Throwable → Error vs Exception → RuntimeException. Know which are checked.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">try-with-resources</div><div class="subtopic-desc">AutoCloseable, suppressed exceptions, why finally can swallow exceptions</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Custom Exceptions</div><div class="subtopic-desc">When to create, naming conventions, including error codes, serialisation UID</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java checked vs unchecked exception best practices</span>
+          <span class="keyword">java try-with-resources suppressed exceptions</span>
+          <span class="keyword">java custom exception design best practice</span>
+          <span class="keyword">spring exception handling @ControllerAdvice</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">When should you create a custom checked exception vs an unchecked one? What does Spring Framework itself prefer and why?</div>
+        <div class="q-item">What happens if both the try block and the finally block throw exceptions? Which one propagates?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You're designing error handling for a payment API that calls three external services. Any of them can fail. How do you design exception handling so that: partial failures are logged, the right HTTP status goes back to the caller, and retry-eligible errors are distinguishable from fatal ones?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: MULTITHREADING
+════════════════════════════════════════ -->
+<section id="multithreading" class="topic-section">
+  <div class="topic-hero">
+    <h2>🔄 Multithreading & Concurrency</h2>
+    <p>One of the highest-signal topics at senior level. Product companies especially go very deep here. You've used ExecutorService and CompletableFuture in projects — connect theory to those experiences.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know</span>
+      <span class="meta-tag tag-type">Product companies go very deep</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Thread Fundamentals & Lifecycle <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Thread States</div><div class="subtopic-desc">NEW → RUNNABLE → BLOCKED → WAITING → TIMED_WAITING → TERMINATED. Know what triggers each transition.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Creating Threads</div><div class="subtopic-desc">Thread vs Runnable vs Callable vs ExecutorService — why raw Thread creation is bad</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Daemon Threads</div><div class="subtopic-desc">JVM exits when only daemon threads remain, GC thread example, setDaemon() before start()</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Thread Interruption</div><div class="subtopic-desc">interrupt(), InterruptedException, isInterrupted() — proper cooperative cancellation pattern</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java thread lifecycle states diagram</span>
+          <span class="keyword">java daemon thread vs user thread</span>
+          <span class="keyword">java thread interrupt cooperative cancellation</span>
+          <span class="keyword">java Callable vs Runnable Future</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between Runnable and Callable? When do you need Callable?</div>
+        <div class="q-item">What is a daemon thread? Give a real use case where you'd use one.</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your service spawns background threads to process report generation. The app is shutting down but some threads are mid-processing. How do you ensure graceful shutdown without losing data?</div>
       </div>
     </div>
   </div>
 
-  <!-- REST API DESIGN -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🌐</div>
-      <div><div class="card-title">REST API Design</div><div class="card-sub">Practical expertise you already have</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">2. Synchronisation & Locks <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>REST constraints — statelessness, uniform interface</li>
-        <li>HTTP methods, status codes (know the nuances: 201 vs 200, 400 vs 422)</li>
-        <li>Idempotency — which methods are idempotent & why</li>
-        <li>Versioning strategies — URI, header, param</li>
-        <li>Pagination — cursor vs offset</li>
-        <li>HATEOAS — concept & when to use</li>
-        <li>API error response design</li>
-        <li>OpenAPI / Swagger documentation</li>
-        <li>Rate limiting, throttling</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">restfulapi.net</span>
-          <span class="res-tag">Baeldung REST</span>
-          <span class="res-tag">HTTP spec MDN</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">synchronized keyword</div><div class="subtopic-desc">Object lock vs class lock, synchronized method vs block, intrinsic lock reentry</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">volatile keyword</div><div class="subtopic-desc">Visibility guarantee, no atomicity, happens-before on write/read, when it's sufficient</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">ReentrantLock</div><div class="subtopic-desc">tryLock(), lockInterruptibly(), fairness, always unlock in finally, ReadWriteLock</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Atomic Classes</div><div class="subtopic-desc">AtomicInteger, AtomicLong, AtomicReference, compareAndSet (CAS) — how hardware CAS works</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Deadlock / Livelock / Starvation</div><div class="subtopic-desc">Conditions for deadlock (4 Coffman conditions), detection via thread dump, prevention strategies</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">StampedLock</div><div class="subtopic-desc">Optimistic read stamp, better than ReadWriteLock for read-heavy workloads</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java synchronized vs ReentrantLock difference</span>
+          <span class="keyword">java volatile guarantee visibility not atomicity</span>
+          <span class="keyword">java deadlock conditions prevention example</span>
+          <span class="keyword">java atomic compareAndSet CAS hardware operation</span>
+          <span class="keyword">java ReadWriteLock StampedLock optimistic read</span>
+          <span class="keyword">java thread dump deadlock analysis</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">Does <code>volatile</code> guarantee atomicity? If I do <code>volatile int count; count++;</code> is this thread-safe? Why or why not? <span class="q-tag hard">Trick — most get this wrong</span></div>
+        <div class="q-item">When would you use ReentrantLock over synchronized? What extra capabilities does it provide?</div>
+        <div class="q-item deep">Write code that creates a deadlock between two threads. Now explain how to fix it. <span class="q-tag hard">Coding</span></div>
+        <div class="q-item">What are the four conditions necessary for a deadlock? How do you prevent each?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your production service suddenly has threads all stuck in BLOCKED state. The app is responding but very slowly. How do you diagnose this? What tool do you use and what do you look for in the output? <span class="q-tag senior">Senior</span></div>
+        <div class="q-item scenario">You have a counter that tracks API call counts per endpoint, read thousands of times per second and updated hundreds of times per second. What concurrency primitive do you use and why?</div>
       </div>
     </div>
   </div>
 
-  <!-- JPA / HIBERNATE -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🗄️</div>
-      <div><div class="card-title">JPA / Hibernate & SQL</div><div class="card-sub">Deep SQL experience already — formalise it</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">3. ExecutorService & Thread Pools <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>JPA vs Hibernate — entity lifecycle</li>
-        <li>Lazy vs eager loading — N+1 problem & fix</li>
-        <li>Transactions — @Transactional propagation & isolation levels</li>
-        <li>JPQL vs native queries, @Query</li>
-        <li>Optimistic vs pessimistic locking (@Version)</li>
-        <li>Second-level cache — Ehcache, Redis integration</li>
-        <li>Database indexing — B-Tree, composite index, covering index</li>
-        <li>Query optimisation — EXPLAIN ANALYZE, avoiding full scans</li>
-        <li>ACID vs BASE — when each applies</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">Vlad Mihalcea blog</span>
-          <span class="res-tag">Baeldung JPA</span>
-          <span class="res-tag">High Performance MySQL (book)</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">ThreadPoolExecutor parameters</div><div class="subtopic-desc">corePoolSize, maxPoolSize, keepAliveTime, queue (LinkedBlockingQueue vs SynchronousQueue), RejectedExecutionHandler</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Executors factory methods</div><div class="subtopic-desc">newFixedThreadPool, newCachedThreadPool, newSingleThreadExecutor, newScheduledThreadPool — pitfalls of each</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">ForkJoinPool</div><div class="subtopic-desc">Work-stealing algorithm, used by parallel streams, common pool, RecursiveTask</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Shutdown strategies</div><div class="subtopic-desc">shutdown() vs shutdownNow(), awaitTermination(), graceful shutdown in Spring Boot</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java ThreadPoolExecutor parameters explained</span>
+          <span class="keyword">java Executors newFixedThreadPool vs newCachedThreadPool pitfalls</span>
+          <span class="keyword">java ForkJoinPool work stealing algorithm</span>
+          <span class="keyword">spring boot thread pool configuration async</span>
+          <span class="keyword">java ExecutorService graceful shutdown pattern</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">What are the risks of using <code>Executors.newFixedThreadPool(100)</code> in production? What queue does it use internally and why is that dangerous? <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">Explain the 7 parameters of ThreadPoolExecutor and how thread creation actually works — when does it create new threads vs queue tasks vs reject them?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your Spring Boot service processes incoming Kafka messages and for each message makes 3 external HTTP calls. Currently this is sequential and slow. How do you parallelise it using ExecutorService without overwhelming the external services? What parameters would you tune?</div>
       </div>
     </div>
   </div>
 
-  <!-- KAFKA -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">⚡</div>
-      <div><div class="card-title">Apache Kafka</div><div class="card-sub">Real project experience — go expert level</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">4. CompletableFuture & Async Programming <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Architecture — broker, topic, partition, offset, consumer group</li>
-        <li>Producer — acks, retries, idempotent producer</li>
-        <li>Consumer — poll loop, commit strategies (auto vs manual)</li>
-        <li>Rebalancing — cooperative sticky rebalancing</li>
-        <li>Exactly-once semantics vs at-least-once</li>
-        <li>Spring Kafka — @KafkaListener, KafkaTemplate</li>
-        <li>Dead letter topics (DLT) — error handling patterns</li>
-        <li>KSQL for stream processing (you've used it!)</li>
-        <li>Schema registry, Avro serialisation (your experience)</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">confluent.io docs</span>
-          <span class="res-tag">Conduktor YouTube</span>
-          <span class="res-tag">Baeldung Kafka</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Core methods</div><div class="subtopic-desc">supplyAsync, runAsync, thenApply, thenCompose, thenCombine, allOf, anyOf</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">thenApply vs thenCompose</div><div class="subtopic-desc">Sync transformation vs async chaining (flatMap equivalent) — critical distinction</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Exception handling</div><div class="subtopic-desc">exceptionally(), handle(), whenComplete() — differences in chaining behaviour</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Custom Executor</div><div class="subtopic-desc">Providing your own thread pool to CompletableFuture instead of ForkJoinPool.commonPool()</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java CompletableFuture thenApply vs thenCompose</span>
+          <span class="keyword">CompletableFuture allOf anyOf example</span>
+          <span class="keyword">CompletableFuture exception handling exceptionally vs handle</span>
+          <span class="keyword">CompletableFuture custom executor thread pool</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between <code>thenApply</code> and <code>thenCompose</code>? When would each one cause a problem if misused?</div>
+        <div class="q-item">How do you run 5 CompletableFutures in parallel and wait for ALL of them to complete? What if you want the result of whichever finishes first?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your API aggregates data from 4 microservices: user profile, transaction history, credit score, and KYC status. Each call takes ~200ms. Currently you call them sequentially (800ms total). Rewrite this using CompletableFuture to run them in parallel. What is the new worst-case latency? <span class="q-tag med">Coding</span></div>
       </div>
     </div>
   </div>
 
-  <!-- DESIGN PATTERNS -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🏗️</div>
-      <div><div class="card-title">Design Patterns & Principles</div><div class="card-sub">Separates senior from mid-level</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">5. Concurrency Utilities <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>SOLID principles — explain with real code examples</li>
-        <li>Creational: Singleton (thread-safe), Factory, Builder</li>
-        <li>Structural: Adapter, Decorator, Proxy, Facade</li>
-        <li>Behavioral: Strategy, Observer, Template Method, Chain of Resp.</li>
-        <li>Repository pattern (you use it in JPA)</li>
-        <li>CQRS basics — command vs query separation</li>
-        <li>Event Sourcing concept</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">refactoring.guru</span>
-          <span class="res-tag">Head First Design Patterns</span>
-          <span class="res-tag">Baeldung Patterns</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">CountDownLatch</div><div class="subtopic-desc">One-time barrier, master thread waits for N workers, cannot be reset</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">CyclicBarrier</div><div class="subtopic-desc">Reusable barrier, all threads wait for each other at a point, optional Runnable on completion</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Semaphore</div><div class="subtopic-desc">Rate limiting, controlling concurrent access to a pool of resources</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">BlockingQueue</div><div class="subtopic-desc">Producer-consumer pattern, ArrayBlockingQueue vs LinkedBlockingQueue, put() vs offer()</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Phaser</div><div class="subtopic-desc">Flexible, dynamic party count, advances phases — use when CountDownLatch is too rigid</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">ThreadLocal</div><div class="subtopic-desc">Per-thread context storage (request context in Spring), memory leak in thread pools if not cleaned</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java CountDownLatch vs CyclicBarrier difference</span>
+          <span class="keyword">java Semaphore rate limiting example</span>
+          <span class="keyword">java BlockingQueue producer consumer pattern</span>
+          <span class="keyword">java ThreadLocal memory leak thread pool</span>
+          <span class="keyword">spring RequestContextHolder ThreadLocal internals</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between CountDownLatch and CyclicBarrier? When would you use each?</div>
+        <div class="q-item deep">How can ThreadLocal cause a memory leak in a thread pool based application like Tomcat? How does Spring handle this? <span class="q-tag hard">Hard</span></div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You need to limit concurrent calls to a third-party API to at most 10 simultaneous requests (they'll throttle you otherwise). How do you implement this in a Spring Boot service that receives hundreds of concurrent requests? <span class="q-tag senior">Senior</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: SPRING BOOT
+════════════════════════════════════════ -->
+<section id="spring-boot" class="topic-section">
+  <div class="topic-hero">
+    <h2>🍃 Spring Boot & Spring Core</h2>
+    <p>Your primary daily stack. At 6 YOE you should know the internals — how autoconfiguration works, why AOP proxies behave the way they do, and when transactions silently don't work.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know</span>
+      <span class="meta-tag tag-type">Asked at ALL companies</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. IoC Container & Bean Lifecycle <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">IoC & DI types</div><div class="subtopic-desc">Constructor (preferred), setter, field injection. Why field injection is discouraged (testing, immutability)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Bean Lifecycle</div><div class="subtopic-desc">Instantiation → populate properties → BeanNameAware → BeanFactoryAware → @PostConstruct → InitializingBean → @PreDestroy → DisposableBean</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Bean Scopes</div><div class="subtopic-desc">Singleton (default), Prototype, Request, Session, Application. Injecting prototype into singleton — the problem and @Lookup fix</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">@Primary & @Qualifier</div><div class="subtopic-desc">Resolving ambiguity with multiple beans of same type</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">BeanFactoryPostProcessor vs BeanPostProcessor</div><div class="subtopic-desc">Modifying bean definitions vs wrapping bean instances (AOP does this)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Circular Dependencies</div><div class="subtopic-desc">How Spring resolves them for singletons (3-level cache), why constructor injection breaks it, Spring Boot 2.6+ blocks them by default</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">spring bean lifecycle phases PostConstruct PreDestroy</span>
+          <span class="keyword">spring inject prototype bean into singleton @Lookup</span>
+          <span class="keyword">spring circular dependency three level cache solution</span>
+          <span class="keyword">spring BeanFactoryPostProcessor vs BeanPostProcessor</span>
+          <span class="keyword">spring constructor injection vs field injection why</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between <code>@PostConstruct</code> and <code>InitializingBean.afterPropertiesSet()</code>? Which should you prefer?</div>
+        <div class="q-item deep">If you inject a prototype-scoped bean into a singleton bean, how many instances of the prototype are created? How do you fix this if you need a new instance each time? <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">How does Spring resolve circular dependencies? Why does constructor injection break this resolution?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You have a singleton service that needs a fresh DB connection object for every method call. You inject a prototype-scoped connection bean via field injection. Is this correct? What actually happens? How do you fix it?</div>
       </div>
     </div>
   </div>
 
-  <!-- SYSTEM DESIGN -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">📐</div>
-      <div><div class="card-title">System Design</div><div class="card-sub">Most important for senior rounds</div></div>
-      <span class="badge high">🔴 Must</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">2. Spring AOP <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Scalability — horizontal vs vertical, load balancers</li>
-        <li>Caching strategies — write-through, write-back, cache aside; Redis</li>
-        <li>Database sharding, partitioning, replication</li>
-        <li>CAP theorem — practical trade-offs</li>
-        <li>Message queues — when Kafka vs RabbitMQ</li>
-        <li>API design at scale — rate limiting, idempotency keys</li>
-        <li>Design: URL shortener, payment system, notification service, e-filing portal</li>
-        <li>Failure modes — retry with backoff, circuit breaker, bulkhead</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">ByteByteGo (Alex Xu)</span>
-          <span class="res-tag">System Design Primer GitHub</span>
-          <span class="res-tag">Gaurav Sen YouTube</span>
-          <span class="res-tag">DDIA book</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">AOP Concepts</div><div class="subtopic-desc">Aspect, Advice (@Before, @After, @Around, @AfterReturning, @AfterThrowing), Pointcut, JoinPoint</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">JDK Dynamic Proxy vs CGLIB</div><div class="subtopic-desc">Interface-based (JDK) vs subclass-based (CGLIB). Spring Boot uses CGLIB by default. When each applies.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Self-invocation problem</div><div class="subtopic-desc">Why calling a @Transactional method from within the same class bypasses the proxy — the most common Spring bug</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Pointcut expressions</div><div class="subtopic-desc">execution(), within(), @annotation(), args() — combining with &&, ||</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">spring AOP JDK proxy vs CGLIB proxy difference</span>
+          <span class="keyword">spring @Transactional self-invocation not working fix</span>
+          <span class="keyword">spring AOP @Around advice ProceedingJoinPoint</span>
+          <span class="keyword">spring pointcut expression execution annotation</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">Your @Transactional annotation is not working. What are the possible reasons? Name at least 4. <span class="q-tag hard">Classic trap</span></div>
+        <div class="q-item">What is the difference between JDK dynamic proxy and CGLIB? When does Spring use each?</div>
+        <div class="q-item">How would you implement a generic logging aspect that logs the method name, parameters, and execution time for all service-layer methods?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You have a <code>UserService</code> with a <code>createUser()</code> method that calls another method <code>sendWelcomeEmail()</code> in the same class. sendWelcomeEmail is annotated @Transactional(propagation=REQUIRES_NEW). Does a new transaction start? Why not? How do you fix this?</div>
       </div>
     </div>
   </div>
 
-  <!-- TESTING -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🧪</div>
-      <div><div class="card-title">Testing (JUnit + Mockito)</div><div class="card-sub">Deep experience — make it shine</div></div>
-      <span class="badge med">🟡 Strong</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">3. Transactions (@Transactional deep dive) <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Unit vs integration vs contract testing</li>
-        <li>Mockito — @Mock, @InjectMocks, spy, verify, ArgumentCaptor</li>
-        <li>@SpringBootTest vs @WebMvcTest vs @DataJpaTest</li>
-        <li>MockMvc — testing REST controllers</li>
-        <li>TestContainers — for DB/Kafka integration tests</li>
-        <li>Code coverage — what 80%+ means; Sonar rules</li>
-        <li>Test pyramid — unit / integration / e2e ratio</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">Baeldung Testing</span>
-          <span class="res-tag">rieckpil.de</span>
-          <span class="res-tag">JUnit 5 docs</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Propagation Types</div><div class="subtopic-desc">REQUIRED, REQUIRES_NEW, NESTED, SUPPORTS, NOT_SUPPORTED, MANDATORY, NEVER — know every one</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Isolation Levels</div><div class="subtopic-desc">READ_UNCOMMITTED, READ_COMMITTED, REPEATABLE_READ, SERIALIZABLE — what anomaly each prevents</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Rollback rules</div><div class="subtopic-desc">Default rolls back on RuntimeException, NOT checked. rollbackFor, noRollbackFor customisation</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">readOnly = true</div><div class="subtopic-desc">Performance hint to DB, Hibernate flush mode NEVER, allows read replicas routing</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">spring @Transactional propagation REQUIRED vs REQUIRES_NEW</span>
+          <span class="keyword">spring transaction isolation levels dirty read phantom read</span>
+          <span class="keyword">spring @Transactional rollback checked exception</span>
+          <span class="keyword">spring transaction NESTED vs REQUIRES_NEW difference</span>
+          <span class="keyword">spring @Transactional readOnly true performance</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">Method A (REQUIRED) calls Method B (REQUIRES_NEW). A throws an exception. What happens to B's transaction?</div>
+        <div class="q-item deep">@Transactional by default does NOT rollback on checked exceptions. How many teams have been bitten by this? Show me how to change it. <span class="q-tag hard">Very common bug</span></div>
+        <div class="q-item">What is the difference between NESTED and REQUIRES_NEW propagation?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You're processing a payment: (1) debit user account, (2) create payment record, (3) send notification. You want steps 1 & 2 to be atomic, but if step 3 fails, you don't want to rollback the payment. How do you structure the @Transactional annotations?</div>
+        <div class="q-item scenario">In your HCSC project, Fiserv sometimes returns a checked exception for partial failures. Your @Transactional method catches it and returns a partial success response. Later you find the DB was NOT rolled back when it should have been. What's the bug?</div>
       </div>
     </div>
   </div>
 
-  <!-- CLOUD / GCP -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">☁️</div>
-      <div><div class="card-title">Cloud (GCP / AWS)</div><div class="card-sub">Certified — leverage it</div></div>
-      <span class="badge med">🟡 Strong</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">4. Spring Boot Autoconfiguration & Internals <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Core services — Compute (GCE/EC2), Storage (GCS/S3), Networking</li>
-        <li>Managed Kubernetes — GKE/EKS basics</li>
-        <li>Cloud Pub/Sub vs Kafka — trade-offs</li>
-        <li>Secrets management — GCP Secret Manager, AWS Secrets Manager</li>
-        <li>IAM — roles, service accounts</li>
-        <li>Containerisation — Docker, basic K8s manifests</li>
-        <li>CI/CD pipelines — Cloud Build / GitHub Actions concept</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">cloud.google.com docs</span>
-          <span class="res-tag">A Cloud Guru</span>
-          <span class="res-tag">TechWorld with Nana</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">How Autoconfiguration Works</div><div class="subtopic-desc">spring.factories / AutoConfiguration.imports, @EnableAutoConfiguration, @Conditional family</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">@Conditional annotations</div><div class="subtopic-desc">@ConditionalOnClass, @ConditionalOnMissingBean, @ConditionalOnProperty — when to use in custom starters</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Actuator</div><div class="subtopic-desc">Health indicators, custom health check, metrics with Micrometer, /actuator/env security</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Spring Boot startup sequence</div><div class="subtopic-desc">SpringApplication.run() → context creation → bean instantiation → command line runners → ready</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">spring boot autoconfiguration how it works internals</span>
+          <span class="keyword">spring boot custom starter autoconfiguration example</span>
+          <span class="keyword">spring boot actuator custom health indicator</span>
+          <span class="keyword">spring @ConditionalOnClass @ConditionalOnMissingBean</span>
+          <span class="keyword">spring boot startup sequence ApplicationContext</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">Walk me through what happens from the moment you call <code>SpringApplication.run()</code> to when your first REST endpoint is ready to serve traffic. <span class="q-tag hard">Deep dive</span></div>
+        <div class="q-item">How would you create a custom Spring Boot starter? What files are needed and where?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your team wants to create an internal library that automatically sets up audit logging (who changed what, when) for any Spring Boot service that includes it as a dependency, with zero configuration. How would you build this as a custom starter?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: SPRING SECURITY
+════════════════════════════════════════ -->
+<section id="spring-security" class="topic-section">
+  <div class="topic-hero">
+    <h2>🔐 Spring Security</h2>
+    <p>Every backend role will ask about this. JWT and OAuth2 are especially common at fintech companies. Know the filter chain cold.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know</span>
+      <span class="meta-tag tag-type">Fintech companies go very deep</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Security Filter Chain <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Filter Chain order</div><div class="subtopic-desc">SecurityContextPersistenceFilter → UsernamePasswordAuthenticationFilter → ExceptionTranslationFilter → FilterSecurityInterceptor</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">SecurityContext</div><div class="subtopic-desc">Stored in ThreadLocal, cleared after request. How to access in async threads.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Custom filters</div><div class="subtopic-desc">OncePerRequestFilter, addFilterBefore/After — where to place JWT validation filter</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Security 6 Lambda DSL</div><div class="subtopic-desc">New fluent API, deprecated WebSecurityConfigurerAdapter pattern</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">spring security filter chain order explained</span>
+          <span class="keyword">spring security OncePerRequestFilter JWT custom filter</span>
+          <span class="keyword">spring security 6 SecurityFilterChain lambda DSL</span>
+          <span class="keyword">spring security SecurityContext async thread propagation</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">Walk me through the Spring Security filter chain. Where exactly would you place a JWT validation filter? What class would you extend? <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">You're using SecurityContextHolder to get the logged-in user in an async @Async method but it returns null. Why? How do you fix it?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Design a security setup for a multi-tenant SaaS application where each tenant has their own set of roles and the same user can have different roles in different tenants. How do you model this in Spring Security?</div>
       </div>
     </div>
   </div>
 
-  <!-- ELASTICSEARCH -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🔍</div>
-      <div><div class="card-title">Elasticsearch</div><div class="card-sub">Real project experience — formalise</div></div>
-      <span class="badge med">🟡 Strong</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">2. JWT Authentication <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Index, document, mapping, shards & replicas</li>
-        <li>Query DSL — match, bool, filter, aggregations</li>
-        <li>Analyzers — standard, custom tokenizers</li>
-        <li>Spring Data Elasticsearch</li>
-        <li>Bulk indexing, scroll API for large datasets</li>
-        <li>ES vs SQL — when to use each</li>
-        <li>Your POC: PDF → JSON → ES indexing (great interview story!)</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">elastic.co docs</span>
-          <span class="res-tag">Baeldung ES</span>
-          <span class="res-tag">Udemy ES course</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">JWT Structure</div><div class="subtopic-desc">Header.Payload.Signature — Base64URL encoding, signing algorithms (HS256 vs RS256), when to use each</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Access + Refresh token pattern</div><div class="subtopic-desc">Short-lived access token, long-lived refresh token, refresh token rotation, revocation challenge</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Token storage</div><div class="subtopic-desc">HttpOnly cookie vs localStorage vs memory — security implications of each (XSS, CSRF)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Token revocation</div><div class="subtopic-desc">JWT is stateless — revocation via blacklist (Redis), short expiry, opaque tokens for sensitive use</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">JWT structure header payload signature explained</span>
+          <span class="keyword">JWT access token refresh token rotation spring boot</span>
+          <span class="keyword">JWT revocation blacklist Redis implementation</span>
+          <span class="keyword">JWT HS256 vs RS256 when to use</span>
+          <span class="keyword">JWT storage HttpOnly cookie vs localStorage security</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between HS256 and RS256 for JWT signing? When would you use RS256?</div>
+        <div class="q-item deep">A user logs out. How do you invalidate their JWT? JWT is stateless — there's no built-in revocation. What are the options and trade-offs? <span class="q-tag hard">Hard</span></div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your fintech API has JWT tokens with 1-hour expiry. A security audit finds that stolen tokens are being used for up to 1 hour after logout. How do you implement token revocation without adding significant latency to every API call?</div>
+        <div class="q-item scenario">You need to implement a "remember me for 30 days" feature. How do you handle this securely with JWT? What changes to your token strategy?</div>
       </div>
     </div>
   </div>
 
-  <!-- DSA -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🧮</div>
-      <div><div class="card-title">DSA & Problem Solving</div><div class="card-sub">Coding rounds — product companies</div></div>
-      <span class="badge med">🟡 Strong</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">3. OAuth 2.0 & OIDC <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Arrays, Strings — two pointer, sliding window</li>
-        <li>HashMap patterns — frequency counts, grouping</li>
-        <li>LinkedList — reversal, cycle detection</li>
-        <li>Trees — DFS, BFS, LCA (Medium level)</li>
-        <li>Stacks & Queues — monotonic stack</li>
-        <li>Binary Search — on answer, rotated arrays</li>
-        <li>Sorting — merge sort, quick sort (know complexity)</li>
-        <li>Dynamic Programming — 1D DP, basic 2D (Medium)</li>
-        <li>Graphs — BFS/DFS, shortest path (Dijkstra concept)</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">LeetCode (top 75)</span>
-          <span class="res-tag">Neetcode.io roadmap</span>
-          <span class="res-tag">Striver's A2Z Sheet</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">OAuth 2.0 flows</div><div class="subtopic-desc">Authorization Code (with PKCE), Client Credentials (service-to-service), Device Flow, Implicit (deprecated)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">OIDC</div><div class="subtopic-desc">Identity layer on top of OAuth2, ID token vs access token, UserInfo endpoint, scopes (openid, profile, email)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Spring Security OAuth2</div><div class="subtopic-desc">Resource server config, @EnableResourceServer, JWT decoder, opaque token introspection</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">PKCE</div><div class="subtopic-desc">Code verifier/challenge, why it's mandatory for public clients (SPAs, mobile), prevents auth code interception</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">OAuth 2.0 authorization code flow with PKCE</span>
+          <span class="keyword">OAuth 2.0 client credentials flow service to service</span>
+          <span class="keyword">OpenID Connect vs OAuth 2.0 difference ID token</span>
+          <span class="keyword">spring security resource server JWT configuration</span>
+          <span class="keyword">OAuth 2.0 PKCE code verifier challenge explained</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between OAuth 2.0 and OIDC? Can you have OAuth2 without OIDC and vice versa?</div>
+        <div class="q-item">When would you use Client Credentials flow vs Authorization Code flow?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You're building a microservices system where Service A calls Service B on behalf of a logged-in user. Service B needs to know WHO the original user is. How do you propagate the user identity securely across services? What OAuth2 pattern handles this?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: JPA / SQL
+════════════════════════════════════════ -->
+<section id="jpa-sql" class="topic-section">
+  <div class="topic-hero">
+    <h2>🗄️ JPA / Hibernate & SQL</h2>
+    <p>You've written complex SQL at Citi — now formalise the theory. JPA internals (N+1, lazy loading, locking) are asked at almost every interview. SQL window functions are increasingly common at product companies.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know</span>
+      <span class="meta-tag tag-type">Fintech / Product ask SQL heavily</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. JPA / Hibernate Internals <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Entity Lifecycle States</div><div class="subtopic-desc">Transient → Managed → Detached → Removed. What persist(), merge(), detach(), remove() do to each</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">N+1 Problem</div><div class="subtopic-desc">What it is, how to reproduce it, fix with JOIN FETCH, @EntityGraph, batch fetching</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Lazy vs Eager Loading</div><div class="subtopic-desc">LazyInitializationException cause, Open Session In View anti-pattern, DTO projection solution</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Dirty Checking</div><div class="subtopic-desc">How Hibernate detects changes to managed entities, flush modes, when to use @DynamicUpdate</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Optimistic vs Pessimistic Locking</div><div class="subtopic-desc">@Version for OCC, LockModeType.PESSIMISTIC_WRITE for PCC, when each makes sense</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Second-Level Cache</div><div class="subtopic-desc">EntityCache vs QueryCache, Ehcache / Redis integration, @Cacheable on entities, stale data risks</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">hibernate entity lifecycle states explained</span>
+          <span class="keyword">JPA N+1 problem solution JOIN FETCH EntityGraph</span>
+          <span class="keyword">hibernate LazyInitializationException cause fix</span>
+          <span class="keyword">JPA optimistic locking @Version example</span>
+          <span class="keyword">hibernate dirty checking how it works flush</span>
+          <span class="keyword">hibernate second level cache ehcache configuration</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">Explain the N+1 problem with a concrete example. Show me the bad SQL it generates and show me two different ways to fix it. <span class="q-tag hard">Classic</span></div>
+        <div class="q-item">What is a LazyInitializationException? What are three ways to fix it? Which is the best approach and why?</div>
+        <div class="q-item">You update a managed entity without calling save(). Does the DB get updated? Why?</div>
+        <div class="q-item">When would you choose pessimistic locking over optimistic locking? Give a real payment scenario.</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your API endpoint that fetches a user with all their orders is making 101 DB queries for 100 users. Production is slow. Walk me through diagnosing this with Hibernate SQL logging and fixing it. <span class="q-tag senior">Senior</span></div>
+        <div class="q-item scenario">Two concurrent requests try to update the same policy record (HCSC scenario). One should succeed and one should retry. How do you implement this with JPA? What exception do you catch and what do you do with it?</div>
       </div>
     </div>
   </div>
 
-  <!-- PERFORMANCE -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">⚙️</div>
-      <div><div class="card-title">Performance & Troubleshooting</div><div class="card-sub">Senior differentiator</div></div>
-      <span class="badge med">🟡 Strong</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">2. SQL — Advanced Queries <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>JVM profiling — heap dump, thread dump analysis</li>
-        <li>Memory leaks — causes & tools (VisualVM, jmap)</li>
-        <li>GC tuning basics — GC logs, pauses</li>
-        <li>Application performance — connection pool sizing (HikariCP)</li>
-        <li>Slow query identification & optimisation</li>
-        <li>REST API latency — profiling with Actuator/Micrometer</li>
-        <li>Production debugging mindset (you have hands-on here!)</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">Java Performance (book)</span>
-          <span class="res-tag">Baeldung JVM</span>
-          <span class="res-tag">Laurentiu Spilca</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Window Functions</div><div class="subtopic-desc">ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, FIRST_VALUE, LAST_VALUE, NTILE — OVER(PARTITION BY ORDER BY)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">CTEs & Recursive CTEs</div><div class="subtopic-desc">WITH clause for readability, recursive CTE for hierarchies (org chart, category trees)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Joins deep dive</div><div class="subtopic-desc">INNER, LEFT, RIGHT, FULL OUTER, CROSS, SELF joins. When to use each. Join vs subquery performance.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Indexing Strategy</div><div class="subtopic-desc">B-Tree index, composite index column order (selectivity), covering index, partial index, index on expressions</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Query Optimisation</div><div class="subtopic-desc">EXPLAIN / EXPLAIN ANALYZE, seq scan vs index scan, why OR breaks indexes, avoiding function on indexed column</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Aggregations</div><div class="subtopic-desc">GROUP BY, HAVING, ROLLUP, CUBE, GROUPING SETS — for the kind of reports you wrote at Citi</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">SQL window functions ROW_NUMBER RANK LAG LEAD examples</span>
+          <span class="keyword">SQL recursive CTE hierarchical data example</span>
+          <span class="keyword">SQL composite index column order selectivity</span>
+          <span class="keyword">SQL covering index avoid table lookup</span>
+          <span class="keyword">EXPLAIN ANALYZE postgres mysql query plan</span>
+          <span class="keyword">SQL ROLLUP CUBE GROUPING SETS aggregation</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">Write a query to find the top 3 highest-paid employees in each department. <span class="q-tag med">Window function</span></div>
+        <div class="q-item">What is a covering index? How does it eliminate the need for a table heap lookup?</div>
+        <div class="q-item">Why does putting a function around an indexed column break the index? Give an example. <span class="q-tag med">Medium</span></div>
+        <div class="q-item">Write a recursive CTE to traverse an employee hierarchy and return all subordinates of a given manager. <span class="q-tag hard">Hard</span></div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">The control report query you wrote at Citi takes 45 seconds on the prod DB. The data volume is 10M rows. You can't change the schema. Walk me through how you'd diagnose and optimise it. <span class="q-tag senior">Senior — use your real experience</span></div>
+        <div class="q-item scenario">You need to detect duplicate payment submissions — same amount, same payer, within 5 minutes. Write the SQL that identifies these duplicates using window functions.</div>
       </div>
     </div>
   </div>
 
-  <!-- REDIS -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🧱</div>
-      <div><div class="card-title">Redis & Caching</div><div class="card-sub">High-frequency system design topic</div></div>
-      <span class="badge low">🔵 Good</span>
-    </div>
+    <div class="card-title" onclick="toggleCard(this)">3. Database Concepts <span class="chevron">▼</span></div>
     <div class="card-body">
-      <ul class="topic-list">
-        <li>Data structures — String, Hash, List, Set, Sorted Set, Stream</li>
-        <li>TTL, eviction policies (LRU, LFU)</li>
-        <li>Spring Cache — @Cacheable, @CacheEvict, @CachePut</li>
-        <li>Redis as session store, rate limiter, pub/sub</li>
-        <li>Redis Cluster vs Sentinel</li>
-        <li>Cache stampede — prevention strategies</li>
-      </ul>
-      <div class="resources">
-        <div class="res-label">Study From</div>
-        <div class="res-list">
-          <span class="res-tag">redis.io docs</span>
-          <span class="res-tag">Baeldung Redis</span>
-          <span class="res-tag">ByteByteGo</span>
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">ACID</div><div class="subtopic-desc">Atomicity, Consistency, Isolation, Durability — how each is implemented at DB level</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">CAP Theorem</div><div class="subtopic-desc">Consistency, Availability, Partition Tolerance — only 2 of 3. What RDBMS, Kafka, Redis each give you</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Sharding & Partitioning</div><div class="subtopic-desc">Horizontal sharding (by user ID), vertical partitioning, range vs hash partitioning, hot-key problem</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Read Replicas</div><div class="subtopic-desc">Master-slave replication, replication lag, routing reads to replicas, @Transactional(readOnly=true)</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">ACID properties database implementation</span>
+          <span class="keyword">CAP theorem practical examples which databases</span>
+          <span class="keyword">database horizontal sharding strategies hot key problem</span>
+          <span class="keyword">database read replica replication lag handling application</span>
         </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What does "D" in ACID (Durability) mean? How does PostgreSQL/MySQL implement it?</div>
+        <div class="q-item">Your read replica has a 2-second replication lag. A user creates a record and immediately tries to read it. They see a 404. What's happening and how do you handle this?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your e-commerce DB has a single users table with 500M rows. Queries by user_id are fast but queries by email are slow. Adding an index on email helps but now your shard key (user_id) and query pattern (email) don't align. How do you solve this at the architecture level?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: MICROSERVICES
+════════════════════════════════════════ -->
+<section id="microservices" class="topic-section">
+  <div class="topic-hero">
+    <h2>🧩 Microservices Design</h2>
+    <p>You've built microservices at Whirlpool and HCSC. Now attach the correct pattern names to what you did. At senior level, you're expected to know failure patterns and distributed system trade-offs.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know</span>
+      <span class="meta-tag tag-type">Asked at ALL company types at senior level</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Core Patterns <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">API Gateway</div><div class="subtopic-desc">Single entry point, routing, auth offloading, rate limiting, request aggregation, SSL termination</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Circuit Breaker</div><div class="subtopic-desc">Resilience4j states: CLOSED → OPEN → HALF_OPEN. Fallback methods, event listeners, actuator endpoint</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Saga Pattern</div><div class="subtopic-desc">Choreography (event-driven) vs Orchestration (Camunda/central coordinator). Compensation transactions.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Service Discovery</div><div class="subtopic-desc">Eureka, Consul. Client-side vs server-side discovery. Health check integration.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Sidecar / Ambassador</div><div class="subtopic-desc">Service mesh concept, Istio, offloading cross-cutting concerns out of application code</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Strangler Fig Pattern</div><div class="subtopic-desc">Migrating a monolith to microservices incrementally — very relevant to your Whirlpool legacy work</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">resilience4j circuit breaker spring boot example</span>
+          <span class="keyword">saga pattern choreography vs orchestration microservices</span>
+          <span class="keyword">microservices API gateway pattern spring cloud gateway</span>
+          <span class="keyword">strangler fig pattern monolith to microservices</span>
+          <span class="keyword">microservices.io patterns catalog</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is a circuit breaker? Walk me through the three states and what triggers each transition.</div>
+        <div class="q-item deep">What is the Saga pattern? When would you choose choreography over orchestration? What are the downsides of each? <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">You worked on legacy code at Whirlpool. How would you approach migrating a monolithic order system to microservices without downtime?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">In your HCSC project, a payment goes through 4 services: auth → payment → accounting → notification. The accounting service fails after payment succeeds. How do you ensure data consistency? Design the compensation flow. <span class="q-tag senior">Senior</span></div>
+        <div class="q-item scenario">Your circuit breaker opens because the downstream service is slow (not failing). Now all requests to that service are failing fast. The business is complaining because some requests are critical. How do you differentiate between request criticality and handle them differently?</div>
       </div>
     </div>
   </div>
 
-</div>
-</div>
-
-<!-- ═══════════════════════════ TIMELINE ═══════════════════════════ -->
-<div id="timeline" class="section">
-<div class="note">
-  Assuming you're actively employed and can spend <strong>1–2 hrs/weekday + 4–5 hrs/weekend</strong>. Adjust pacing if you have more time.
-</div>
-<div class="timeline">
-
-  <div class="week-block">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-num">WEEK 1</span>
-      <span class="week-title">Core Java Depth + Multithreading</span>
-      <span class="week-focus">Foundation</span>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="week-body open">
-      <ul>
-        <li>Revise JVM internals — heap, stack, GC (G1, ZGC). Read Baeldung's GC series.</li>
-        <li>Collections deep dive — HashMap internals (hash collision, resize), LinkedHashMap, TreeMap, ConcurrentHashMap.</li>
-        <li>Java 8–17 features — Streams (collectors, flatMap, groupingBy), Optional, Records, Sealed classes.</li>
-        <li>Multithreading: Thread lifecycle, synchronized, volatile, happens-before. Practice writing a thread-safe singleton.</li>
-        <li>ExecutorService, CompletableFuture — write a small async pipeline. Practice: chaining thenApply, thenCompose, exceptionally.</li>
-        <li>Concurrency utilities — CountDownLatch, Semaphore, BlockingQueue. Write code examples for each.</li>
-        <li>LeetCode: 2–3 easy/medium HashMap/Array problems daily (warm-up habit).</li>
-      </ul>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">2. Inter-service Communication <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Sync vs Async</div><div class="subtopic-desc">REST/gRPC for sync, Kafka/RabbitMQ for async. Trade-offs: coupling, latency, availability</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">gRPC</div><div class="subtopic-desc">Protocol Buffers, HTTP/2, streaming types, when faster than REST, Spring gRPC support</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Retry with backoff</div><div class="subtopic-desc">Exponential backoff + jitter, idempotency requirement for safe retries, Spring Retry</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Bulkhead pattern</div><div class="subtopic-desc">Thread pool isolation per downstream service, prevents one slow service from exhausting all threads</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">gRPC vs REST comparison when to use</span>
+          <span class="keyword">exponential backoff jitter retry pattern java</span>
+          <span class="keyword">resilience4j bulkhead thread pool isolation</span>
+          <span class="keyword">microservices idempotency retry safe operations</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">When would you use gRPC over REST in microservice communication?</div>
+        <div class="q-item">Why do you need idempotency keys when implementing retries? What happens without them in a payment context?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Service A calls Service B (payment processor) which is intermittently slow. You add a 3x retry with exponential backoff. Three months later you discover that some users are being charged multiple times. What went wrong and how do you fix the architecture?</div>
+      </div>
     </div>
   </div>
 
-  <div class="week-block">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-num">WEEK 2</span>
-      <span class="week-title">Spring Boot Deep Dive + Spring Security</span>
-      <span class="week-focus">Core Stack</span>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="week-body">
-      <ul>
-        <li>Spring IoC — write a custom BeanFactoryPostProcessor. Understand bean lifecycle hooks.</li>
-        <li>AOP — implement a logging aspect using @Around. Understand JDK proxy vs CGLIB difference.</li>
-        <li>@Transactional — test all propagation types (REQUIRED, REQUIRES_NEW, NESTED). Understand self-invocation pitfall.</li>
-        <li>Spring Boot autoconfiguration — read source of one starter (e.g. DataSourceAutoConfiguration). Understand @Conditional.</li>
-        <li>Spring Security: Build a small app with JWT auth. Implement UserDetailsService. Add role-based @PreAuthorize.</li>
-        <li>OAuth 2.0 flows — draw out the Authorization Code flow on paper. Understand refresh token rotation.</li>
-        <li>LeetCode: Two Pointer + Sliding Window problems (5–6 total this week).</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="week-block">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-num">WEEK 3</span>
-      <span class="week-title">JPA / Hibernate + SQL Mastery</span>
-      <span class="week-focus">Data Layer</span>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="week-body">
-      <ul>
-        <li>JPA entity lifecycle states — transient, managed, detached, removed. Write code that demonstrates each.</li>
-        <li>N+1 problem — reproduce it, then fix it with JOIN FETCH and @EntityGraph.</li>
-        <li>Transaction isolation levels — READ_UNCOMMITTED to SERIALIZABLE. Understand dirty read, non-repeatable read, phantom read.</li>
-        <li>Optimistic locking — implement @Version field. Simulate a conflict and handle ObjectOptimisticLockingFailureException.</li>
-        <li>SQL: Window functions (ROW_NUMBER, RANK, LAG, LEAD), CTEs, recursive queries. Practice on LeetCode SQL section.</li>
-        <li>Database indexing — understand when composite index column order matters. Practice EXPLAIN ANALYZE on slow queries.</li>
-        <li>LeetCode SQL 50 — complete 10 medium SQL problems this week.</li>
-      </ul>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">3. Observability & Distributed Tracing <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Distributed Tracing</div><div class="subtopic-desc">Trace ID + Span ID propagation, Micrometer Tracing (replacing Sleuth), Zipkin / Jaeger</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Structured Logging</div><div class="subtopic-desc">JSON logs with traceId, correlation IDs in MDC, log aggregation (ELK / Splunk)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Metrics</div><div class="subtopic-desc">Micrometer + Prometheus + Grafana, custom counters, histograms, gauges, SLO/SLA</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Health checks</div><div class="subtopic-desc">Liveness vs readiness probes (Kubernetes), custom Actuator health indicators</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">spring boot micrometer tracing zipkin distributed tracing</span>
+          <span class="keyword">MDC logging correlation ID spring boot example</span>
+          <span class="keyword">micrometer prometheus grafana spring boot</span>
+          <span class="keyword">kubernetes liveness vs readiness probe spring boot</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">You used Cloud Sleuth in your HCSC project. How does trace ID propagation work across service boundaries? What happens when a service calls another via Kafka vs REST?</div>
+        <div class="q-item">What is the difference between a liveness probe and a readiness probe in Kubernetes? What should each check?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">A user reports their payment is "stuck". You have logs from 6 microservices. How do you find where the request failed? What would you have needed to set up in advance to make this investigation fast?</div>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="week-block">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-num">WEEK 4</span>
-      <span class="week-title">Microservices Patterns + Kafka Expert</span>
-      <span class="week-focus">Architecture</span>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="week-body">
-      <ul>
-        <li>Microservices patterns — read microservices.io. Be able to explain Saga (choreography vs orchestration) with a real example from your HCSC payment project.</li>
-        <li>Circuit Breaker — implement Resilience4j in a Spring Boot service. Configure fallback and half-open state.</li>
-        <li>API Gateway patterns — rate limiting, auth offloading, request aggregation.</li>
-        <li>Kafka deep dive — producer acks (0/1/all), consumer group rebalancing, offset management. Reproduce a rebalance scenario.</li>
-        <li>Spring Kafka — implement DLT (Dead Letter Topic) error handling. Write a retry consumer with @RetryableTopic.</li>
-        <li>Distributed tracing — revise Cloud Sleuth (you've used it). Understand trace ID propagation across services.</li>
-        <li>LeetCode: Binary Search problems (5–6). Start Trees (BFS/DFS).</li>
-      </ul>
+
+<!-- ════════════════════════════════════════
+     SECTION: SYSTEM DESIGN
+════════════════════════════════════════ -->
+<section id="system-design" class="topic-section">
+  <div class="topic-hero">
+    <h2>📐 System Design</h2>
+    <p>The most important round at senior level in product and fintech companies. You have excellent real stories — map them to the theory. Practice speaking out loud for 40+ minutes on a single design.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know</span>
+      <span class="meta-tag tag-type">Product + Fintech = Mandatory</span>
+      <span class="meta-tag tag-type">60-min dedicated round</span>
     </div>
   </div>
 
-  <div class="week-block">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-num">WEEK 5</span>
-      <span class="week-title">System Design (Intensive)</span>
-      <span class="week-focus">Senior Rounds</span>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="week-body">
-      <ul>
-        <li>Read ByteByteGo chapters: URL shortener, rate limiter, notification system, consistent hashing.</li>
-        <li>Design a payment processing system — map your HCSC experience to the concepts (Fiserv integration, error handling, retries).</li>
-        <li>Design an e-filing portal (your Infosys work) — discuss scale, PDF generation service, async processing.</li>
-        <li>Caching deep dive — cache aside vs write-through. When to use Redis for session vs data caching. Cache invalidation strategies.</li>
-        <li>Database sharding vs partitioning — know the difference. Understand horizontal scaling limitations of RDBMS.</li>
-        <li>CAP theorem + PACELC — pick real examples (Kafka = AP, RDBMS = CP in typical config).</li>
-        <li>Practice talking through a design out loud for 30–40 mins (key skill for system design rounds).</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="week-block">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-num">WEEK 6</span>
-      <span class="week-title">Design Patterns + Performance + Testing</span>
-      <span class="week-focus">Depth</span>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="week-body">
-      <ul>
-        <li>SOLID — prepare a concrete code example for each principle (violation → fix). This comes up constantly.</li>
-        <li>Design patterns — implement Strategy (your ClearCarbon status cycle is a good fit), Decorator, Chain of Responsibility, Observer in Java. Don't just memorise — code them.</li>
-        <li>JVM performance — take a thread dump, analyse it. Simulate a deadlock and read the dump. Understand GC log format.</li>
-        <li>HikariCP pool tuning — understand maximumPoolSize, connectionTimeout, leakDetectionThreshold. When does pool exhaustion occur?</li>
-        <li>Testing mastery — write a test with TestContainers for a JPA repo. Write a MockMvc test for a secured endpoint. Practice ArgumentCaptor.</li>
-        <li>Revisit Elasticsearch — DSL queries (bool/filter/must), aggregations, Spring Data ES. Practise your PDF→JSON→ES story.</li>
-        <li>LeetCode: Tree + Graph problems (7–8). Attempt 2–3 Mediums on DP.</li>
-      </ul>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Scalability Fundamentals <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Horizontal vs Vertical scaling</div><div class="subtopic-desc">When each works, stateless services requirement for horizontal, sticky sessions problem</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Load Balancing</div><div class="subtopic-desc">L4 vs L7, algorithms (round-robin, least connections, IP hash), health checks, sticky sessions</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Consistent Hashing</div><div class="subtopic-desc">Virtual nodes, minimising remapping on node add/remove — used in caches, sharding</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">CDN</div><div class="subtopic-desc">Static vs dynamic caching, edge locations, cache invalidation, when to use CDN for API responses</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">consistent hashing virtual nodes explained</span>
+          <span class="keyword">load balancer L4 vs L7 algorithms</span>
+          <span class="keyword">horizontal scaling stateless application design</span>
+          <span class="keyword">ByteByteGo system design fundamentals</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Design the e-filing portal (your Infosys project) to handle 50 million taxpayers filing in a 2-week window. Normal traffic is 10K RPS, peak is 500K RPS. Walk me through every layer of the architecture. <span class="q-tag senior">Full 40-min design</span></div>
+        <div class="q-item scenario">Your stateful Spring Boot service stores user sessions in memory. You need to scale to 10 instances. What breaks? How do you fix it? What are the trade-offs of different session storage strategies?</div>
+      </div>
     </div>
   </div>
 
-  <div class="week-block">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-num">WEEK 7</span>
-      <span class="week-title">Mock Interviews + Gap Filling</span>
-      <span class="week-focus">Simulation</span>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="week-body">
-      <ul>
-        <li>Mock system design interview: design a "Control Report generation system" (maps directly to your Citi experience). Time yourself — 45 mins.</li>
-        <li>Mock coding: 2 LeetCode mediums under timed conditions (45 mins each).</li>
-        <li>Mock behavioural: Answer all 10 behavioural questions in the interview tab out loud. Record yourself once.</li>
-        <li>Identify weakest topic from weeks 1–6. Spend 2 full days on it.</li>
-        <li>Revise all your "stories" — HCSC payment service, ClearCarbon ownership, Citi lead role, Whirlpool Kafka base project. Each should be a crisp 2–3 min STAR format answer.</li>
-        <li>Practice explaining your Spot Award situation, Citi VP interactions, and PIP management — good leadership signals.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="week-block">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-num">WEEK 8</span>
-      <span class="week-title">Final Polish + Interview Week</span>
-      <span class="week-focus">Execution</span>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="week-body">
-      <ul>
-        <li>Light revision only — no new topics. Review your notes from all 7 weeks.</li>
-        <li>Solve 1 LeetCode easy per day (confidence, not challenge).</li>
-        <li>Re-read your resume — be ready to talk about every line for 5 minutes.</li>
-        <li>Prepare 5 questions to ask the interviewer (about tech stack, team structure, deployment cadence, on-call, etc.)</li>
-        <li>Rest well 2 days before interview. Don't cram.</li>
-      </ul>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">2. Caching Architecture <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Cache strategies</div><div class="subtopic-desc">Cache-aside (lazy loading), write-through, write-back (write-behind), read-through</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Cache invalidation</div><div class="subtopic-desc">TTL, event-driven invalidation, cache stampede / thundering herd — and fixes</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Multi-level caching</div><div class="subtopic-desc">L1 (in-process Caffeine) → L2 (Redis) → DB. When each level helps.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Cache-related problems</div><div class="subtopic-desc">Cache penetration (non-existent key), cache avalanche (mass expiry), cache hotspot</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">cache aside vs write-through vs write-back strategy</span>
+          <span class="keyword">cache stampede thundering herd problem solution</span>
+          <span class="keyword">cache penetration avalanche hotspot solutions</span>
+          <span class="keyword">caffeine cache vs Redis spring boot multi-level</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">What is cache stampede and how do you prevent it? Explain at least two solutions. <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">What is the difference between cache-aside and read-through caching? Which is more common in Spring Boot applications?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You need to cache user profile data in your RegInsight-style app. Profiles are read 10,000 times/sec but updated once every few hours. However, when a profile IS updated, all 10 services that cached it must see the change within 5 seconds. Design the caching strategy.</div>
+      </div>
     </div>
   </div>
 
-</div>
-</div>
-
-<!-- ═══════════════════════════ QUESTIONS ═══════════════════════════ -->
-<div id="questions" class="section">
-<div class="note">
-  Click any question to see it highlighted. <strong>Behavioral</strong> = purple · <strong>Technical</strong> = blue · <strong>Coding</strong> = green · <strong>Scenario/Design</strong> = yellow
-</div>
-
-<div class="q-section">
-  <div class="q-cat-title">🎯 Behavioural & Leadership (Your Strong Suit)</div>
-  <div class="q-list">
-    <div class="q-item behavioral">Tell me about a time you led a team under a tight deadline and things went wrong. <span class="q-difficulty med">STAR Format</span></div>
-    <div class="q-item behavioral">You worked directly with VP/AVP stakeholders at Citi. How do you manage upward communication with senior business stakeholders?</div>
-    <div class="q-item behavioral">Describe a situation where you had to push back on a client's request. How did you handle it?</div>
-    <div class="q-item behavioral">You received a Spot Award. Walk me through what you did to earn it. <span class="q-difficulty easy">Have story ready</span></div>
-    <div class="q-item behavioral">Tell me about managing a junior team member on a PIP. What was your approach and what did you learn?</div>
-    <div class="q-item behavioral">How do you handle a situation where production is down and you don't know the root cause yet?</div>
-    <div class="q-item behavioral">You've worked across fintech, healthcare, and enterprise. How do you quickly ramp up on a new domain?</div>
-    <div class="q-item behavioral">Tell me about a time you proactively identified a delivery risk before it became a problem.</div>
-    <div class="q-item behavioral">How do you balance your own delivery commitments while also guiding junior team members?</div>
-    <div class="q-item behavioral">Why do you want to move from a service company environment to [product company / new role]?</div>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">3. Designing Specific Systems (Practice These) <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Payment System</div><div class="subtopic-desc">Idempotency, exactly-once processing, ledger model, reconciliation, fraud detection hook — directly maps to your work</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Rate Limiter</div><div class="subtopic-desc">Token bucket, leaky bucket, sliding window log, sliding window counter — implement with Redis</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Notification Service</div><div class="subtopic-desc">Multi-channel (email/SMS/push), deduplication, delivery guarantees, priority queues</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Reporting / Analytics System</div><div class="subtopic-desc">OLTP vs OLAP, pre-aggregation, materialized views, event sourcing for audit trail — maps to Citi reports</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Search System</div><div class="subtopic-desc">Elasticsearch architecture, index design, relevance scoring, near real-time indexing pipeline</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">URL Shortener</div><div class="subtopic-desc">Hashing strategies, collision handling, redirect logic, analytics tracking — classic warm-up design</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">design payment system system design interview</span>
+          <span class="keyword">rate limiter system design token bucket Redis</span>
+          <span class="keyword">design notification service system design</span>
+          <span class="keyword">ByteByteGo design URL shortener</span>
+          <span class="keyword">OLAP vs OLTP difference reporting system design</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Design a regulatory reporting system (like Citi RegInsight) that must process 5 million transactions daily, derive 20+ attributes per transaction, generate control reports, and support on-demand reprocessing of historical data. What is your architecture? <span class="q-tag senior">Use your real experience</span></div>
+        <div class="q-item scenario">Design a payment processing service at 50,000 TPS. Requirements: exactly-once processing, sub-100ms p99 latency, full audit trail, fraud check integration, idempotency. What does your architecture look like?</div>
+        <div class="q-item scenario">Design a distributed rate limiter that limits each user to 100 API calls per minute across a cluster of 20 service instances. A per-instance counter won't work. What's your approach?</div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<div class="q-section">
-  <div class="q-cat-title">☕ Core Java</div>
-  <div class="q-list">
-    <div class="q-item technical">How does HashMap handle hash collisions internally? What changed in Java 8? <span class="q-difficulty med">Medium</span></div>
-    <div class="q-item technical">Explain the Java memory model. What does "happens-before" mean and why does it matter for concurrency? <span class="q-difficulty hard">Hard</span></div>
-    <div class="q-item technical">What is the difference between <code>synchronized</code> and <code>ReentrantLock</code>? When would you use each?</div>
-    <div class="q-item technical">How does <code>CompletableFuture</code> work? What is the difference between <code>thenApply</code> and <code>thenCompose</code>?</div>
-    <div class="q-item technical">What is a memory leak in Java? Give two real examples and how to detect them.</div>
-    <div class="q-item technical">Explain <code>volatile</code>. Does it guarantee atomicity? When is it sufficient vs insufficient? <span class="q-difficulty hard">Trick question</span></div>
-    <div class="q-item technical">What are the differences between Comparable and Comparator? How does Stream.sorted() use them?</div>
-    <div class="q-item technical">Explain ThreadLocal. What is a common misuse that causes a memory leak in web applications?</div>
-    <div class="q-item technical">What is the difference between <code>String</code>, <code>StringBuilder</code>, and <code>StringBuffer</code>? When does interning matter?</div>
-    <div class="q-item technical">How does the G1 garbage collector work? What triggers a Full GC and how do you avoid it?</div>
+
+<!-- ════════════════════════════════════════
+     SECTION: KAFKA
+════════════════════════════════════════ -->
+<section id="kafka" class="topic-section">
+  <div class="topic-hero">
+    <h2>⚡ Apache Kafka</h2>
+    <p>You have real Kafka + KSQL + Avro experience from Whirlpool. This is a huge differentiator. Go expert level — interviewers WILL probe this hard once they see it on your resume.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know (You have real experience)</span>
+      <span class="meta-tag tag-type">Fintech / Product go very deep</span>
+    </div>
   </div>
-</div>
 
-<div class="q-section">
-  <div class="q-cat-title">🍃 Spring Boot & Spring Core</div>
-  <div class="q-list">
-    <div class="q-item technical">What is the difference between <code>@Component</code>, <code>@Service</code>, <code>@Repository</code>, and <code>@Controller</code>?</div>
-    <div class="q-item technical">Explain Spring AOP. What is the difference between JDK dynamic proxy and CGLIB proxy? When does each apply? <span class="q-difficulty hard">Hard</span></div>
-    <div class="q-item technical">What happens if you call a <code>@Transactional</code> method from within the same class (self-invocation)? Why? How do you fix it?</div>
-    <div class="q-item technical">Explain all <code>@Transactional</code> propagation types. When would you use <code>REQUIRES_NEW</code> vs <code>NESTED</code>?</div>
-    <div class="q-item technical">How does Spring Boot autoconfiguration work? Walk through what happens when the app starts. <span class="q-difficulty hard">Hard</span></div>
-    <div class="q-item technical">What is the difference between <code>@Bean</code> in <code>@Configuration</code> vs <code>@Component</code>? What is "full" vs "lite" configuration mode?</div>
-    <div class="q-item technical">How would you implement a custom Spring Boot starter?</div>
-    <div class="q-item technical">What is the difference between <code>@RestController</code> and <code>@Controller</code>? How does <code>@ResponseBody</code> factor in?</div>
-    <div class="q-item technical">How do you handle exceptions globally in Spring Boot? Compare <code>@ExceptionHandler</code> vs <code>@ControllerAdvice</code>.</div>
-    <div class="q-item technical">Explain Spring bean scopes. What problems can arise from injecting a prototype bean into a singleton?</div>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Kafka Architecture Internals <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Broker, Topic, Partition</div><div class="subtopic-desc">Log-structured storage, segment files, retention policies (time vs size), compacted topics</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Replication</div><div class="subtopic-desc">Leader-follower, ISR (In-Sync Replicas), min.insync.replicas, unclean leader election trade-off</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Consumer Groups</div><div class="subtopic-desc">Partition assignment, one partition per consumer max, group coordinator, offset commit</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Zookeeper vs KRaft</div><div class="subtopic-desc">Why Kafka is moving away from Zookeeper (Kafka 3.x KRaft mode)</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">kafka architecture broker partition replica internals</span>
+          <span class="keyword">kafka ISR in-sync replicas min.insync.replicas</span>
+          <span class="keyword">kafka consumer group partition assignment rebalance</span>
+          <span class="keyword">kafka log compaction when to use</span>
+          <span class="keyword">kafka KRaft mode remove zookeeper</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is ISR in Kafka? What happens if a follower falls out of the ISR? What is the risk of unclean leader election?</div>
+        <div class="q-item">What is a compacted Kafka topic? When would you use it over a regular topic?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You need to ensure a Kafka message is never lost even if a broker crashes mid-write. What producer and broker settings do you configure? What is the performance cost?</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="q-section">
-  <div class="q-cat-title">🔐 Spring Security</div>
-  <div class="q-list">
-    <div class="q-item technical">Walk me through the Spring Security filter chain. What is the order of filters? <span class="q-difficulty hard">Hard</span></div>
-    <div class="q-item technical">How does JWT authentication work in Spring Boot? Where should you validate the token — which filter?</div>
-    <div class="q-item technical">What is the difference between OAuth 2.0 and OpenID Connect? When do you need OIDC?</div>
-    <div class="q-item technical">When would you disable CSRF protection in Spring Security? What is the risk?</div>
-    <div class="q-item technical">Explain <code>@PreAuthorize</code> vs <code>@Secured</code> vs <code>@RolesAllowed</code>. What AOP concept enables method security?</div>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">2. Producers & Delivery Semantics <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">acks setting</div><div class="subtopic-desc">acks=0 (fire-and-forget), acks=1 (leader ack), acks=all (ISR ack). Durability vs throughput trade-off.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Idempotent Producer</div><div class="subtopic-desc">enable.idempotence=true, sequence numbers, exactly-once within a partition</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Transactional Producer</div><div class="subtopic-desc">Atomic multi-partition writes, initTransactions/beginTransaction/commitTransaction API</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Partitioning strategy</div><div class="subtopic-desc">Default (hash of key), custom partitioner, null key (round-robin), sticky partitioner (batch optimisation)</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">kafka producer acks 0 1 all comparison</span>
+          <span class="keyword">kafka idempotent producer enable.idempotence</span>
+          <span class="keyword">kafka transactional producer exactly-once semantics</span>
+          <span class="keyword">kafka producer partitioning strategy custom partitioner</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">What is the difference between at-least-once, at-most-once, and exactly-once delivery in Kafka? What specific producer + broker + consumer settings give you exactly-once? <span class="q-tag hard">Hard</span></div>
+        <div class="q-item">When would you use a message key in Kafka? What guarantees does it give you? What happens if all messages have the same key?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You're publishing payment events to Kafka. Kafka successfully receives the message, but your DB write fails. You retry — now you have a duplicate message in Kafka AND a duplicate payment in DB. How do you design the system to prevent double-charging?</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="q-section">
-  <div class="q-cat-title">🗄️ JPA / Hibernate & Database</div>
-  <div class="q-list">
-    <div class="q-item technical">What is the N+1 problem? Show me the bad query it generates and two ways to fix it.</div>
-    <div class="q-item technical">Explain optimistic vs pessimistic locking. When would you choose each in a payment service context?</div>
-    <div class="q-item technical">What are the four transaction isolation levels? What anomaly does each prevent?</div>
-    <div class="q-item technical">What is the difference between <code>FetchType.LAZY</code> and <code>FetchType.EAGER</code>? What is the LazyInitializationException and how do you avoid it?</div>
-    <div class="q-item technical">How does a composite index work? Does the order of columns matter? <span class="q-difficulty hard">Often asked</span></div>
-    <div class="q-item technical">What is a covering index? How can it eliminate a table lookup entirely?</div>
-    <div class="q-item technical">Explain the difference between <code>TRUNCATE</code>, <code>DELETE</code>, and <code>DROP</code>. Which is transactional?</div>
-    <div class="q-item technical">You have a slow query on a table with 50M rows. Walk me through how you'd diagnose and fix it.</div>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">3. Consumers & Error Handling <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Poll loop & offset commit</div><div class="subtopic-desc">Auto-commit risks, manual commit (commitSync vs commitAsync), at-least-once pattern</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Consumer Rebalancing</div><div class="subtopic-desc">Eager vs cooperative rebalancing, session.timeout.ms, heartbeat.interval.ms, max.poll.interval.ms</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Dead Letter Topic (DLT)</div><div class="subtopic-desc">Spring Kafka DLT, @RetryableTopic with exponential backoff, DltHandler</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Consumer Lag</div><div class="subtopic-desc">Monitoring lag, causes (slow processing, under-partitioned), solutions (scale consumers, optimise processing)</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">kafka consumer manual commit offset commitSync commitAsync</span>
+          <span class="keyword">kafka consumer rebalancing cooperative sticky</span>
+          <span class="keyword">spring kafka @RetryableTopic DLT dead letter topic</span>
+          <span class="keyword">kafka consumer lag monitoring causes solutions</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the risk of using auto-commit in Kafka consumers? How do you implement exactly at-least-once with manual commit?</div>
+        <div class="q-item">Your consumer is being kicked out of the group and rebalancing is happening every 2 minutes. What's causing this? What settings do you check?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">A poison pill message (malformed JSON) keeps causing your consumer to crash and restart in a loop. Kafka keeps redelivering it. Your consumer lag is growing and legitimate messages are blocked. How do you handle this in Spring Kafka? Walk through your complete error handling strategy. <span class="q-tag senior">Senior</span></div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="q-section">
-  <div class="q-cat-title">⚡ Kafka & Messaging</div>
-  <div class="q-list">
-    <div class="q-item technical">How does Kafka guarantee ordering within a partition? What happens if you need ordering across partitions?</div>
-    <div class="q-item technical">What is the difference between at-least-once, at-most-once, and exactly-once semantics in Kafka? <span class="q-difficulty hard">Hard</span></div>
-    <div class="q-item technical">Explain consumer group rebalancing. What is cooperative sticky rebalancing and why is it better?</div>
-    <div class="q-item technical">You have a Kafka consumer that is falling behind (lag is increasing). What are your options?</div>
-    <div class="q-item technical">What is a Dead Letter Topic? When would you use it vs a retry topic with exponential backoff?</div>
-    <div class="q-item technical">How does Avro schema evolution work? What is backward vs forward compatibility?</div>
-    <div class="q-item technical">When would you use Kafka vs RabbitMQ vs a database-backed queue?</div>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">4. KSQL & Avro (Your Real Experience) <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">KSQL / ksqlDB</div><div class="subtopic-desc">SQL over Kafka streams, persistent queries, tables vs streams, windowed aggregations</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Avro Schema</div><div class="subtopic-desc">Binary serialisation, Schema Registry, schema evolution (backward/forward/full compatibility)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Kafka Streams</div><div class="subtopic-desc">KStream vs KTable, stateful operations (aggregations, joins), state stores, topology</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">ksqlDB persistent query stream table difference</span>
+          <span class="keyword">Avro schema evolution backward forward compatibility</span>
+          <span class="keyword">kafka streams KStream KTable join stateful</span>
+          <span class="keyword">confluent schema registry avro spring boot</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between backward and forward compatibility in Avro schema evolution? Which should you default to and why?</div>
+        <div class="q-item">You used KSQL in your Whirlpool project. What's the difference between a KSQL Stream and a KSQL Table? When would you use each?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You've been using Avro schema version 1 in production for 6 months. You need to add a new required field to the schema. Existing consumers haven't been updated yet. How do you evolve the schema safely? What settings in Schema Registry do you use?</div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<div class="q-section">
-  <div class="q-cat-title">🏗️ Design Patterns & Principles</div>
-  <div class="q-list">
-    <div class="q-item technical">Give me a real example from your experience where you applied the Strategy pattern. <span class="q-difficulty easy">You have one — ClearCarbon</span></div>
-    <div class="q-item technical">What is the Decorator pattern? How is it different from inheritance? Where does Spring use it?</div>
-    <div class="q-item technical">How would you write a thread-safe Singleton in Java? What are the pitfalls of double-checked locking pre-Java 5?</div>
-    <div class="q-item technical">Explain the Open/Closed Principle with a code example. Show a violation and how you'd fix it.</div>
-    <div class="q-item technical">What is the Dependency Inversion Principle? How does Spring enforce it?</div>
-    <div class="q-item technical">What is CQRS? When does it make sense to use it and when is it overkill?</div>
+
+<!-- ════════════════════════════════════════
+     SECTION: DESIGN PATTERNS
+════════════════════════════════════════ -->
+<section id="design-patterns" class="topic-section">
+  <div class="topic-hero">
+    <h2>🏗️ Design Patterns & SOLID</h2>
+    <p>Don't just memorise definitions — connect every pattern to code you've written. You have real examples from ClearCarbon (status cycle = Strategy), HCSC (payment handlers = Strategy/Factory), Citi (report builders = Builder/Template Method).</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Must Know</span>
+      <span class="meta-tag tag-type">Always asked at all companies</span>
+    </div>
   </div>
-</div>
 
-<div class="q-section">
-  <div class="q-cat-title">📐 System Design Scenarios</div>
-  <div class="q-list">
-    <div class="q-item scenario">Design a payment processing service that must handle 10,000 TPS, guarantee exactly-once processing, and handle Fiserv errors gracefully. <span class="q-difficulty hard">45 min design</span></div>
-    <div class="q-item scenario">Design the e-filing portal you worked on at Infosys — PDF form generation, tax validation, grievance management. How would you scale it for 50M taxpayers?</div>
-    <div class="q-item scenario">Design a real-time regulatory reporting system (like your Citi RegInsight work). How do you ensure data consistency across derived attributes and control reports?</div>
-    <div class="q-item scenario">Design a notification service that must send emails, SMS, and push notifications. How do you ensure delivery, deduplication, and handle failures?</div>
-    <div class="q-item scenario">You need to build a search feature over 100M documents that supports full-text search and faceted filtering. Walk me through your design.</div>
-    <div class="q-item scenario">How would you design a rate limiter for an API that serves 1M users? Discuss token bucket vs sliding window algorithms.</div>
-    <div class="q-item scenario">Your microservice is getting 5x traffic suddenly. Walk me through every layer of the stack and what could break and how to handle it.</div>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. SOLID Principles (Code-level) <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">SRP</div><div class="subtopic-desc">One reason to change. Fat service class doing parsing + DB + email = violation. Split into focused classes.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">OCP</div><div class="subtopic-desc">Open for extension, closed for modification. Use Strategy/Factory. Adding a new payment type shouldn't change existing code.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">LSP</div><div class="subtopic-desc">Subtypes must behave like their parent. A Square extending Rectangle breaks LSP (setWidth changes height).</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">ISP</div><div class="subtopic-desc">Don't force clients to implement interfaces they don't use. Split fat interfaces.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">DIP</div><div class="subtopic-desc">Depend on abstractions, not concretions. How Spring DI enforces this through interfaces.</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">SOLID principles java code examples violation fix</span>
+          <span class="keyword">LSP violation square rectangle example java</span>
+          <span class="keyword">OCP open closed principle java strategy pattern</span>
+          <span class="keyword">DIP dependency inversion spring framework example</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">Show me a violation of the Open/Closed Principle in a payment processing class and how you'd refactor it.</div>
+        <div class="q-item deep">Explain the Liskov Substitution Principle. Why does a Square extending Rectangle violate it? What's the correct solution? <span class="q-tag hard">Classic LSP trap</span></div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You have a single <code>ReportService</code> class that generates PDF reports, emails them, saves them to S3, and updates the DB. A change to the email logic broke the PDF generation in production. Which SOLID principle does this violate and how do you refactor it?</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="q-section">
-  <div class="q-cat-title">💻 Coding Problems (Java)</div>
-  <div class="q-list">
-    <div class="q-item coding">Implement a thread-safe LRU Cache in Java without using LinkedHashMap. <span class="q-difficulty hard">Classic Senior Question</span></div>
-    <div class="q-item coding">Write a custom iterator for a binary tree that returns elements in inorder without recursion.</div>
-    <div class="q-item coding">Given a list of transactions, find all pairs of transactions from the same user that sum to a given amount. Optimize for O(n). <span class="q-difficulty med">HashMap</span></div>
-    <div class="q-item coding">Implement a rate limiter using token bucket algorithm in Java. Make it thread-safe.</div>
-    <div class="q-item coding">Find the longest substring without repeating characters. Then extend: what if you can skip at most K characters? <span class="q-difficulty med">Sliding Window</span></div>
-    <div class="q-item coding">Given a list of tasks with deadlines and durations, write a scheduler that maximises completed tasks. <span class="q-difficulty med">Greedy</span></div>
-    <div class="q-item coding">Write a generic deep copy utility in Java using reflection or serialization. What are the trade-offs of each approach?</div>
-    <div class="q-item coding">Implement a Kafka consumer that processes messages exactly once using idempotency keys stored in a database. Show the full Spring Boot code structure.</div>
-    <div class="q-item coding">Given a list of bank transactions, detect potential fraud — same account, 3+ transactions within 5 minutes. Use Java Streams. <span class="q-difficulty med">Streams + Time Window</span></div>
-    <div class="q-item coding">Design and implement a simple circuit breaker in Java from scratch (CLOSED → OPEN → HALF_OPEN states). <span class="q-difficulty hard">System Design + Code</span></div>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">2. Creational Patterns <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Singleton</div><div class="subtopic-desc">Thread-safe implementations: eager init, synchronized getInstance, double-checked locking (volatile!), Enum singleton, holder pattern</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Factory Method</div><div class="subtopic-desc">Let subclasses decide what to instantiate. Spring's ApplicationContext.getBean() is a factory.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Abstract Factory</div><div class="subtopic-desc">Factory of factories. Creating families of related objects without specifying concrete classes.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Builder</div><div class="subtopic-desc">Step-by-step object construction, Lombok @Builder, immutable objects with many optional fields</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Prototype</div><div class="subtopic-desc">Cloning objects, deep vs shallow copy, Java Cloneable pitfalls, copy constructor alternative</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java singleton thread-safe double-checked locking volatile</span>
+          <span class="keyword">java enum singleton why best implementation</span>
+          <span class="keyword">java builder pattern Lombok @Builder</span>
+          <span class="keyword">factory pattern vs abstract factory java</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">Write a thread-safe Singleton without using synchronized on the whole method. Explain why double-checked locking requires volatile. <span class="q-tag hard">Classic</span></div>
+        <div class="q-item">When would you use the Builder pattern over a constructor? What problem does it solve with many optional fields?</div>
+      </div>
+    </div>
   </div>
-</div>
 
-</div>
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">3. Structural & Behavioural Patterns <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Strategy</div><div class="subtopic-desc">Define a family of algorithms, encapsulate each, make them interchangeable. Your ClearCarbon status cycle, HCSC payment types.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Observer</div><div class="subtopic-desc">One-to-many dependency. Spring ApplicationEvents is Observer. Kafka publish-subscribe is Observer at scale.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Decorator</div><div class="subtopic-desc">Add behaviour dynamically. Java I/O streams, Spring Security filter chain, @Transactional proxy wrapping.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Template Method</div><div class="subtopic-desc">Algorithm skeleton in parent, steps in subclasses. JdbcTemplate, RestTemplate internals use this.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Chain of Responsibility</div><div class="subtopic-desc">Pass request along a chain. Spring Security filter chain, middleware pipelines.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Proxy</div><div class="subtopic-desc">Control access to object. Spring AOP is a proxy. Virtual proxy for lazy loading (Hibernate).</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">strategy pattern java real world payment example</span>
+          <span class="keyword">decorator pattern java IO stream example</span>
+          <span class="keyword">observer pattern spring application events</span>
+          <span class="keyword">chain of responsibility spring security filter</span>
+          <span class="keyword">template method pattern JdbcTemplate spring</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">Where does Spring internally use the Template Method pattern? Give two concrete examples.</div>
+        <div class="q-item">What is the difference between the Decorator and Proxy patterns? They look similar — what's the key distinction?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You have a report generation service that generates monthly reports. The structure is always the same: load data → validate → transform → format → save. But each report type does each step differently. Which pattern do you apply? Write the class structure. <span class="q-tag med">Coding</span></div>
+        <div class="q-item scenario">In your ClearCarbon project, the status cycle had many states (Draft → Submitted → Approved → etc.) with different logic at each state. How would you model this cleanly using design patterns? (Hint: two patterns apply here.)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: REST API
+════════════════════════════════════════ -->
+<section id="rest-api" class="topic-section">
+  <div class="topic-hero">
+    <h2>🌐 REST API Design</h2>
+    <p>You've built production REST APIs for years. Formalise the theory and be ready for "why" questions — not just "what".</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-med">🟡 Strong Differentiator</span>
+      <span class="meta-tag tag-type">All companies</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. REST Principles & HTTP Mastery <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">REST constraints</div><div class="subtopic-desc">Statelessness, uniform interface, layered system, cacheable, client-server, code on demand</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">HTTP methods & idempotency</div><div class="subtopic-desc">GET/HEAD/PUT/DELETE = idempotent, POST/PATCH = not. Why this matters for retries.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">HTTP status codes</div><div class="subtopic-desc">200/201/204, 400/401/403/404/409/422/429, 500/502/503/504 — know the nuances</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Versioning</div><div class="subtopic-desc">URI (/v1/users), header (Accept: application/vnd.api.v1+json), query param — pros/cons of each</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">HATEOAS</div><div class="subtopic-desc">Links in response for discoverability, Spring HATEOAS library, when it's worth the complexity</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Pagination</div><div class="subtopic-desc">Offset (simple but unstable), cursor/keyset (stable, scalable), page metadata in response</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">REST API idempotent methods explained</span>
+          <span class="keyword">HTTP 400 vs 422 vs 409 difference when to use</span>
+          <span class="keyword">REST API versioning strategies comparison</span>
+          <span class="keyword">cursor pagination vs offset pagination comparison</span>
+          <span class="keyword">REST API error response design best practices</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is idempotency? Which HTTP methods are idempotent? Why does it matter for retry logic?</div>
+        <div class="q-item">What is the difference between HTTP 400, 409, and 422? Give a real scenario for each.</div>
+        <div class="q-item">Why does cursor-based pagination scale better than offset pagination for large datasets?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You're designing a PATCH endpoint for updating a user's profile. A mobile client with poor connectivity might send the same request twice. How do you design the endpoint so the second call is safe? What HTTP status do you return for the duplicate?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: TESTING
+════════════════════════════════════════ -->
+<section id="testing" class="topic-section">
+  <div class="topic-hero">
+    <h2>🧪 Testing — JUnit, Mockito, Spring Test</h2>
+    <p>You've written JUnit tests extensively across all your projects. Go beyond "I wrote unit tests" — show you understand testing strategy, test quality, and integration testing.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-med">🟡 Strong Differentiator</span>
+      <span class="meta-tag tag-type">All companies</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. JUnit 5 & Mockito Deep Dive <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">JUnit 5 annotations</div><div class="subtopic-desc">@Test, @BeforeEach, @BeforeAll, @ParameterizedTest, @ValueSource, @CsvSource, @Nested, @DisplayName, @Tag</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Mockito core</div><div class="subtopic-desc">@Mock, @Spy, @InjectMocks, @Captor, when().thenReturn(), doThrow(), verify(), times(), ArgumentCaptor</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">@Mock vs @Spy</div><div class="subtopic-desc">Mock creates a full fake, Spy wraps real object and lets you override specific methods</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">ArgumentCaptor</div><div class="subtopic-desc">Capturing method arguments for complex assertions — when matchers aren't enough</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Testing static methods</div><div class="subtopic-desc">Mockito.mockStatic() (Mockito 3.4+), PowerMock (legacy) — when to avoid static methods</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Assertions</div><div class="subtopic-desc">AssertJ vs JUnit assertions, assertThrows, assertAll for multiple assertions in one test</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">mockito @Mock vs @Spy difference example</span>
+          <span class="keyword">JUnit 5 @ParameterizedTest @CsvSource example</span>
+          <span class="keyword">mockito ArgumentCaptor example use case</span>
+          <span class="keyword">mockito mockStatic static method testing</span>
+          <span class="keyword">AssertJ assertions spring boot test</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between @Mock and @Spy in Mockito? When would you use a Spy?</div>
+        <div class="q-item">How do you test that a specific method was called with specific arguments? Walk me through using ArgumentCaptor.</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You need to test a method that sends an email. You don't want to actually send emails in tests. The EmailService is injected. Write the complete unit test — show your mock setup, the call, and the verification.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">2. Spring Boot Testing <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">@SpringBootTest</div><div class="subtopic-desc">Full context load, webEnvironment=RANDOM_PORT vs MOCK, slow but complete integration test</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">@WebMvcTest</div><div class="subtopic-desc">Only MVC layer, fast, use for controller tests, @MockBean for services</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">@DataJpaTest</div><div class="subtopic-desc">Only JPA components, embedded DB by default, @Sql for test data, slow but realistic</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">@MockBean vs @Mock</div><div class="subtopic-desc">@MockBean replaces real bean in Spring context, @Mock is Mockito-only (no Spring context)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">TestContainers</div><div class="subtopic-desc">Real DB/Kafka/Redis in Docker for integration tests, @Container, @DynamicPropertySource</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">MockMvc</div><div class="subtopic-desc">perform(get()), andExpect(status().isOk()), andExpect(jsonPath()), testing secured endpoints</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">spring @WebMvcTest vs @SpringBootTest difference</span>
+          <span class="keyword">spring @MockBean vs Mockito @Mock difference</span>
+          <span class="keyword">TestContainers spring boot kafka postgres example</span>
+          <span class="keyword">MockMvc test secured endpoint spring security</span>
+          <span class="keyword">spring @DataJpaTest @Sql test data setup</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item deep">What is the difference between @SpringBootTest, @WebMvcTest, and @DataJpaTest? When would you use each? What does each load? <span class="q-tag hard">Often asked</span></div>
+        <div class="q-item">What is the difference between @MockBean and @Mock? Can you use @Mock in a @WebMvcTest?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You want to write an integration test for your Kafka consumer that reads from a topic, processes a message, and saves to PostgreSQL. You want to test with real Kafka and real DB, not mocks. How do you set this up with TestContainers? Walk through the key annotations and setup steps.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: PERFORMANCE & JVM
+════════════════════════════════════════ -->
+<section id="performance" class="topic-section">
+  <div class="topic-hero">
+    <h2>⚙️ Performance Tuning & JVM Troubleshooting</h2>
+    <p>You've done production root-cause analysis at Infosys and Citi — this is your story to tell. Frame every answer around your real experience of diagnosing and fixing production issues.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-med">🟡 Strong Differentiator</span>
+      <span class="meta-tag tag-type">Senior-level signal</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. JVM Profiling & Diagnostics <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Heap Dump Analysis</div><div class="subtopic-desc">jmap -dump, Eclipse MAT / VisualVM, finding memory leaks, largest object trees, GC roots</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Thread Dump Analysis</div><div class="subtopic-desc">jstack, identifying deadlocks (BLOCKED threads), thread pool exhaustion, waiting vs blocked</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">GC Log Analysis</div><div class="subtopic-desc">-Xlog:gc*, pause times, GC throughput, when to tune heap size vs GC algorithm</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">CPU profiling</div><div class="subtopic-desc">async-profiler, flame graphs, finding hot methods, lock contention</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">java heap dump analysis Eclipse MAT memory leak</span>
+          <span class="keyword">java thread dump deadlock analysis jstack</span>
+          <span class="keyword">java GC log analysis tuning G1</span>
+          <span class="keyword">async-profiler flame graph java CPU profiling</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">Walk me through how you'd diagnose a Java application that's using 90% CPU continuously.</div>
+        <div class="q-item">How do you take a heap dump from a running production JVM without restarting it? What tool do you use to analyse it?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your Spring Boot service starts fine but after 2 days of load it becomes unresponsive. The GC is running constantly (GC overhead limit exceeded error). Walk me through every step of diagnosing and fixing this. <span class="q-tag senior">Senior</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">2. Application-Level Performance <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Connection Pool Tuning</div><div class="subtopic-desc">HikariCP: maximumPoolSize, connectionTimeout, leakDetectionThreshold. Pool exhaustion symptoms.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">REST client performance</div><div class="subtopic-desc">RestTemplate (blocking) vs WebClient (reactive/non-blocking), connection pooling in HTTP clients</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Async vs Reactive</div><div class="subtopic-desc">@Async for simple offloading, Spring WebFlux for true non-blocking I/O at scale</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Database query performance</div><div class="subtopic-desc">Slow query log, index hints, query plan cache, batch inserts vs individual, prepared statements</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">HikariCP connection pool tuning parameters guide</span>
+          <span class="keyword">spring WebClient vs RestTemplate performance</span>
+          <span class="keyword">spring @Async thread pool configuration</span>
+          <span class="keyword">spring boot slow query logging hibernate sql</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your API has p99 latency of 8 seconds, p50 is 200ms. What does this distribution tell you? Where do you investigate first? Walk through your systematic approach. <span class="q-tag senior">Senior diagnostic question</span></div>
+        <div class="q-item scenario">Your DB connection pool shows 100% utilisation (all connections in use) during peak hours. Adding more pool connections doesn't help — it just moves the bottleneck. What's the real problem and how do you fix it architecturally?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: REDIS
+════════════════════════════════════════ -->
+<section id="redis" class="topic-section">
+  <div class="topic-hero">
+    <h2>🧱 Redis & Caching</h2>
+    <p>You did Redis training — now make it interview-ready. Redis questions often come up in system design rounds as part of caching or rate-limiting discussions.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-med">🟡 Strong Differentiator</span>
+      <span class="meta-tag tag-type">Fintech / Product companies</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Redis Core Concepts <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Data structures</div><div class="subtopic-desc">String, Hash, List, Set, Sorted Set, HyperLogLog, Stream, Bitmap — when to use each</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Expiry & eviction</div><div class="subtopic-desc">TTL (EXPIRE/EXPIREAT), eviction policies (noeviction, allkeys-lru, volatile-lru, allkeys-lfu)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Persistence</div><div class="subtopic-desc">RDB (snapshots) vs AOF (append-only log), hybrid mode, durability trade-offs</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Redis Cluster vs Sentinel</div><div class="subtopic-desc">Cluster for horizontal scaling (16384 slots), Sentinel for HA of a single master</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Atomic operations</div><div class="subtopic-desc">INCR/DECR atomicity, MULTI/EXEC transactions (optimistic), Lua scripts for true atomicity</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Pub/Sub vs Streams</div><div class="subtopic-desc">Pub/Sub: fire-and-forget, no persistence. Streams: persistent, consumer groups, like mini-Kafka</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">redis data structures use cases when to use each</span>
+          <span class="keyword">redis eviction policies allkeys-lru allkeys-lfu</span>
+          <span class="keyword">redis cluster vs sentinel high availability</span>
+          <span class="keyword">redis distributed lock Redlock algorithm</span>
+          <span class="keyword">redis sorted set leaderboard rate limiter use case</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">When would you use a Redis Sorted Set? Give two real use cases.</div>
+        <div class="q-item">What is the difference between Redis RDB and AOF persistence? Which gives better durability? Which gives faster restart?</div>
+        <div class="q-item deep">How would you implement a distributed lock using Redis? What is Redlock and when do you need it vs a simple SETNX? <span class="q-tag hard">Hard</span></div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You need to implement a "top 10 most active users in the last hour" leaderboard that updates in real time and can serve 50,000 reads/sec. How do you use Redis for this? Which data structure? How do you handle the sliding window?</div>
+        <div class="q-item scenario">Two instances of your payment service try to process the same payment at the same time. You need only one to proceed. Implement a distributed lock using Redis. What happens if the lock holder crashes before releasing it?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">2. Spring Cache with Redis <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Spring Cache abstraction</div><div class="subtopic-desc">@Cacheable, @CachePut, @CacheEvict, @Caching, CacheManager, key generation</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Spring Data Redis</div><div class="subtopic-desc">RedisTemplate, StringRedisTemplate, serialization (Jackson2JsonRedisSerializer), value operations</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Custom cache keys</div><div class="subtopic-desc">SpEL expressions in @Cacheable key, composite keys, conditional caching (condition, unless)</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">spring @Cacheable @CacheEvict Redis example</span>
+          <span class="keyword">spring RedisTemplate Jackson serialization</span>
+          <span class="keyword">spring cache condition unless SpEL</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between @Cacheable and @CachePut? When would you use @CachePut?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">You cache user profiles with @Cacheable. An admin updates a user's roles. The user's next API call still gets the old cached roles for up to 30 minutes. How do you fix cache invalidation so the change is reflected immediately across all instances?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: ELASTICSEARCH
+════════════════════════════════════════ -->
+<section id="elasticsearch" class="topic-section">
+  <div class="topic-hero">
+    <h2>🔍 Elasticsearch</h2>
+    <p>You have real Elasticsearch experience from Citi, including your PDF → JSON → ES POC. Frame this well in interviews — it shows initiative and technical breadth beyond the typical Java developer.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-med">🟡 Strong Differentiator</span>
+      <span class="meta-tag tag-type">Fintech / Data-heavy companies</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. ES Core Concepts <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Index, Document, Mapping</div><div class="subtopic-desc">Dynamic vs explicit mapping, data types (text vs keyword), index templates, ILM policies</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Shards & Replicas</div><div class="subtopic-desc">Primary shard count is fixed at creation (routing implications), replicas for read scaling and HA</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Query DSL</div><div class="subtopic-desc">match, term, range, bool (must/should/must_not/filter), nested, aggregations (terms, date_histogram, avg)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Analyzers</div><div class="subtopic-desc">Standard, whitespace, language-specific, custom analyzer (tokenizer + filters). text vs keyword for exact match</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Relevance scoring</div><div class="subtopic-desc">TF-IDF / BM25, boost, function_score, script_score</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Bulk API & Indexing</div><div class="subtopic-desc">Bulk indexing performance, refresh_interval tuning, index buffer size, _source field</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">elasticsearch text vs keyword field type difference</span>
+          <span class="keyword">elasticsearch bool query must should filter difference</span>
+          <span class="keyword">elasticsearch aggregations terms date_histogram example</span>
+          <span class="keyword">elasticsearch custom analyzer tokenizer filter</span>
+          <span class="keyword">elasticsearch bulk indexing performance tuning</span>
+          <span class="keyword">spring data elasticsearch @Document @Field example</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between a <code>text</code> and a <code>keyword</code> field in Elasticsearch? When would you use each?</div>
+        <div class="q-item">What is the difference between <code>must</code> and <code>filter</code> in a bool query? Why does filter perform better?</div>
+        <div class="q-item">You can't change the number of primary shards after index creation. Why? What's the problem if you get it wrong at the start?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Tell me about the PDF → JSON → Elasticsearch POC you built at Citi. What was the use case? How did you structure the Elasticsearch index? What queries would you run against it? <span class="q-tag easy">Use your real experience</span></div>
+        <div class="q-item scenario">You need to build a search feature for a regulatory document repository. Users search by free text, filter by date range and document type, and want results ranked by relevance. How do you design the Elasticsearch index and the query?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: CLOUD
+════════════════════════════════════════ -->
+<section id="cloud" class="topic-section">
+  <div class="topic-hero">
+    <h2>☁️ Cloud & Containers</h2>
+    <p>You're GCP certified. Use that. Most backend roles don't go super deep into cloud internals but expect you to know containerisation and basic cloud services.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-med">🟡 Strong Differentiator</span>
+      <span class="meta-tag tag-type">Product companies expect this</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Docker & Kubernetes Basics <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Docker</div><div class="subtopic-desc">Dockerfile best practices (multi-stage build, non-root user, layer caching), image vs container, volumes</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Kubernetes core objects</div><div class="subtopic-desc">Pod, Deployment, Service, ConfigMap, Secret, Ingress, PersistentVolume</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Probes</div><div class="subtopic-desc">Liveness (restart if failed), Readiness (don't route traffic), Startup (slow starting apps)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Resource limits</div><div class="subtopic-desc">CPU requests vs limits, memory OOM kill, QoS classes (Guaranteed/Burstable/BestEffort)</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Rolling deployments</div><div class="subtopic-desc">RollingUpdate strategy, maxSurge/maxUnavailable, blue-green and canary deployment patterns</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Google These</div>
+        <div class="keywords-wrap">
+          <span class="keyword">dockerfile multi-stage build spring boot best practices</span>
+          <span class="keyword">kubernetes liveness readiness startup probe difference</span>
+          <span class="keyword">kubernetes rolling update blue green canary deployment</span>
+          <span class="keyword">kubernetes resource requests limits OOM</span>
+          <span class="keyword">spring boot kubernetes deployment yaml example</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Direct Questions</div>
+        <div class="q-item">What is the difference between a liveness probe and a readiness probe? What should each check in a Spring Boot app?</div>
+        <div class="q-item">What is a multi-stage Docker build? Why do you use it for Java apps?</div>
+        <div class="q-group-label">🎯 Scenario Questions</div>
+        <div class="q-item scenario">Your Spring Boot app takes 45 seconds to start (it loads large reference data). Without proper probe configuration, Kubernetes kills it before it's ready. How do you configure the probes to handle this? What are the risks of getting it wrong?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: DSA
+════════════════════════════════════════ -->
+<section id="dsa" class="topic-section">
+  <div class="topic-hero">
+    <h2>🧮 DSA & Coding Rounds</h2>
+    <p>Product companies (Flipkart, Amazon, Razorpay) have dedicated coding rounds with 2 problems in 90 mins. Service companies are lighter. Fintech startups often give take-home assignments. Target LeetCode Medium consistently.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-med">🟡 Important for Product cos</span>
+      <span class="meta-tag tag-type">LeetCode Medium target</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Topic-wise Study List with Problem Patterns <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Arrays & Strings</div><div class="subtopic-desc">Two pointer, sliding window, prefix sum, kadane's algorithm, string manipulation</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">HashMap Patterns</div><div class="subtopic-desc">Frequency count, group by, two-sum pattern, sliding window with hashmap</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Linked List</div><div class="subtopic-desc">Reversal, cycle detection (Floyd's), merge sorted lists, find middle, nth from end</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Trees</div><div class="subtopic-desc">DFS (inorder/preorder/postorder), BFS (level-order), LCA, validate BST, serialize/deserialize</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Graphs</div><div class="subtopic-desc">BFS/DFS, topological sort, union-find, shortest path (Dijkstra concept), cycle detection</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Binary Search</div><div class="subtopic-desc">On sorted array, on answer space, rotated array, first/last occurrence</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Stack & Queue</div><div class="subtopic-desc">Monotonic stack (next greater element), valid parentheses, BFS with queue</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Dynamic Programming</div><div class="subtopic-desc">1D DP (climbing stairs, house robber), 2D DP (unique paths), LCS, knapsack (concept)</div></div>
+      </div>
+      <div class="keywords-section">
+        <div class="keywords-label">🔍 Study Resources</div>
+        <div class="keywords-wrap">
+          <span class="keyword">Neetcode 150 list (neetcode.io)</span>
+          <span class="keyword">Striver SDE Sheet</span>
+          <span class="keyword">LeetCode Top Interview 150</span>
+          <span class="keyword">LeetCode company tags: Amazon, Flipkart</span>
+        </div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💻 Must-Practice Problems</div>
+        <div class="q-item coding">Two Sum, 3Sum, Container with Most Water <span class="q-tag easy">Arrays</span></div>
+        <div class="q-item coding">Longest Substring Without Repeating Characters, Minimum Window Substring <span class="q-tag med">Sliding Window</span></div>
+        <div class="q-item coding">LRU Cache (LinkedHashMap, then from scratch with HashMap + DLL) <span class="q-tag hard">Classic Senior</span></div>
+        <div class="q-item coding">Reverse Linked List, Detect Cycle, Merge Two Sorted Lists <span class="q-tag easy">LinkedList</span></div>
+        <div class="q-item coding">Binary Tree Level Order, Max Depth, Validate BST, LCA <span class="q-tag med">Trees</span></div>
+        <div class="q-item coding">Number of Islands, Course Schedule (cycle in directed graph), Clone Graph <span class="q-tag med">Graphs</span></div>
+        <div class="q-item coding">Search in Rotated Sorted Array, Find First and Last Position <span class="q-tag med">Binary Search</span></div>
+        <div class="q-item coding">Daily Temperatures (monotonic stack), Valid Parentheses <span class="q-tag med">Stack</span></div>
+        <div class="q-item coding">Climbing Stairs, House Robber, Coin Change, Unique Paths <span class="q-tag med">DP</span></div>
+        <div class="q-item coding">Top K Frequent Elements, Kth Largest in Stream (PriorityQueue) <span class="q-tag med">Heap</span></div>
+
+        <div class="q-group-label">🎯 Java-Specific Coding Questions</div>
+        <div class="q-item coding">Given a list of Employee objects, group by department and find the highest-paid employee per department using Streams. <span class="q-tag easy">Streams</span></div>
+        <div class="q-item coding">Implement a thread-safe bounded blocking queue from scratch (without BlockingQueue). <span class="q-tag hard">Concurrency</span></div>
+        <div class="q-item coding">Write a generic Pair<A,B> class. Why does Java type erasure matter here? <span class="q-tag med">Generics</span></div>
+        <div class="q-item coding">Implement a simple event bus (Observer pattern) that allows subscribing to named events and publishing them. Make it thread-safe. <span class="q-tag hard">Patterns + Concurrency</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SECTION: BEHAVIOURAL
+════════════════════════════════════════ -->
+<section id="behavioural" class="topic-section">
+  <div class="topic-hero">
+    <h2>🎤 Behavioural & Leadership</h2>
+    <p>This is your strongest area. You have exceptional stories — VP/AVP stakeholder management, Spot Award, leading a team, handling PIP, managing production crises. Use STAR format: Situation → Task → Action → Result. Keep each answer to 2–3 minutes.</p>
+    <div class="hero-meta">
+      <span class="meta-tag tag-priority-high">🔴 Always Asked</span>
+      <span class="meta-tag tag-type">Your competitive advantage</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">1. Leadership & Ownership Questions <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="subtopic-grid">
+        <div class="subtopic-item"><div class="subtopic-name">Story: Spot Award</div><div class="subtopic-desc">What you did, the delivery pressure, the specific actions, the impact. Shows ownership and excellence.</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Story: VP/AVP stakeholders</div><div class="subtopic-desc">How you communicated technical details to business leaders, managed expectations, gained trust</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Story: Leading the team of 4</div><div class="subtopic-desc">How you delegated, handled blockers, managed priorities, onboarded new members</div></div>
+        <div class="subtopic-item"><div class="subtopic-name">Story: Production crisis</div><div class="subtopic-desc">A production issue you owned end-to-end — diagnosis, fix, communication, post-mortem</div></div>
+      </div>
+      <div class="questions-section">
+        <div class="q-group-label">💬 Leadership Questions</div>
+        <div class="q-item behavioural">Tell me about a time you had to lead under pressure with tight deadlines. What did you do when things went wrong?</div>
+        <div class="q-item behavioural">You received a Spot Award at Citi. Walk me through exactly what you did to earn it — specifics, not generalities.</div>
+        <div class="q-item behavioural">How do you handle a situation where a team member is not performing? Have you ever had to document someone on a PIP?</div>
+        <div class="q-item behavioural">You worked with VP and AVP stakeholders directly. How do you communicate technical problems and risks to non-technical senior leaders?</div>
+        <div class="q-item behavioural">Describe a time you pushed back on a client's or manager's decision. How did you handle the disagreement?</div>
+        <div class="q-item behavioural">Tell me about a complex deployment you managed. What could have gone wrong and what did you do to prevent it?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">2. Technical Decision & Problem-Solving <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="questions-section">
+        <div class="q-group-label">💬 Technical Scenario Behavioural</div>
+        <div class="q-item behavioural">Tell me about a technically complex problem you solved that nobody else on the team could figure out.</div>
+        <div class="q-item behavioural">Describe a situation where you had to learn a completely new technology quickly to deliver a project. (You have Kafka, Elasticsearch, Camunda stories.)</div>
+        <div class="q-item behavioural">Have you ever disagreed with an architectural decision? What did you do?</div>
+        <div class="q-item behavioural">Tell me about a time you identified a risk in a project before it became a problem. What was your approach?</div>
+        <div class="q-item behavioural">Describe the most impactful thing you built from scratch. Why was it impactful? (Your Kafka base project, PDF→ES POC, control reports.)</div>
+        <div class="q-item behavioural">Tell me about a production bug that was your fault. How did you handle it? What did you learn?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" onclick="toggleCard(this)">3. Career & Motivation Questions <span class="chevron">▼</span></div>
+    <div class="card-body">
+      <div class="questions-section">
+        <div class="q-group-label">💬 Questions You Must Prepare</div>
+        <div class="q-item behavioural">Walk me through your career from Infosys to HashedIn to now. What was the progression?</div>
+        <div class="q-item behavioural">Why are you looking for a new role? (Answer honestly but positively — growth, product focus, scale, learning.)</div>
+        <div class="q-item behavioural">Where do you see yourself in 3 years? What kind of engineer do you want to be?</div>
+        <div class="q-item behavioural">What's your biggest strength as an engineer? What's an area you're actively working to improve?</div>
+        <div class="q-item behavioural">Why do you want to join [company name specifically]? (Research the company before every interview.)</div>
+        <div class="q-item behavioural">Do you have any questions for us? (Always have 3–4 thoughtful questions ready.)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</main>
 </div>
 
 <script>
-function switchTab(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+function show(id) {
+  document.querySelectorAll('.topic-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('active');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  event.currentTarget.classList.add('active');
 }
 
-function toggleWeek(header) {
-  const body = header.nextElementSibling;
-  const chevron = header.querySelector('.chevron');
+function toggleCard(titleEl) {
+  const body = titleEl.nextElementSibling;
   const isOpen = body.classList.contains('open');
   body.classList.toggle('open', !isOpen);
-  chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+  titleEl.classList.toggle('open', !isOpen);
 }
 
-// Init chevrons for closed weeks
-document.querySelectorAll('.week-body.open').forEach(b => {
-  b.previousElementSibling.querySelector('.chevron').style.transform = 'rotate(180deg)';
-});
+// Open all cards by default
+document.querySelectorAll('.card-body').forEach(b => b.classList.add('open'));
+document.querySelectorAll('.card-title').forEach(t => t.classList.add('open'));
 </script>
 </body>
 </html>
